@@ -20,8 +20,8 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no user@your-server-ip << 'EOF'
-            cd /path/to/your/app
+          ssh -o StrictHostKeyChecking=no root@35.203.101.153 << 'EOF'
+            cd /app/react/vehicle-dashboard-react
             git pull origin main
             npm install
             npm run build
