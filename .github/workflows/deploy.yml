@@ -14,17 +14,19 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up SSH key
-        uses: agisga/ssh-agent-action@v0.5.0
+        uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Verify SSH key is loaded
+        run: ssh-add -l
 
       - name: Add server to known_hosts
         run: ssh-keyscan -H 35.203.101.153 >> ~/.ssh/github-actions
 
       - name: Deploy to server
         run: |
-          ssh root@35.203.101.153 << 'EOF'
+          ssh -v root@35.203.101.153 << 'EOF'
             # Create the app directory if it doesn't exist
             [ ! -d "/app/react/vehicle-dashboard-react" ] && mkdir -p /app/react/vehicle-dashboard-react
 
