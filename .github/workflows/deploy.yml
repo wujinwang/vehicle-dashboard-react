@@ -1,4 +1,4 @@
-name: Deploy React App to Linux Server
+name: Deploy Vehicle Dashboard App to Linux Server
 
 on:
   push:
