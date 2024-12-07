@@ -14,7 +14,7 @@ import {
   TemperatureIcon,
 } from "./components/ui/icons";
 import SpeedSetting from "./components/speed-setting";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function Home() {
   const [powerAngle, setPowerAngle] = useState(0);
@@ -23,11 +23,7 @@ export default function Home() {
   const [powerDataList, setPowerDataList] = useState<number[]>([]);
   const [rpmDataList, setRpmDataList] = useState<number[]>([]);
 
-  // Constants for Gauges
-  const gaugeConfig = {
-    power: { max: 1000, step: 250 },
-    rpm: { max: 800, step: 100 },
-  };
+
 
   const getPowerDataList = (max: number, step: number) => {
     return Array.from(
@@ -41,22 +37,23 @@ export default function Home() {
   };
 
   // Refresh data and angles
-  const handleRefreshData = async () => {
+  const handleRefreshData = useCallback(() => {
+    // Constants for Gauges
+    const gaugeConfig = {
+      power: { max: 1000, step: 250 },
+      rpm: { max: 800, step: 100 },
+    };
 
-    const powerList = getPowerDataList(gaugeConfig.power.max, gaugeConfig.power.step);
-    const rpmList = getRpmDataList(gaugeConfig.rpm.max, gaugeConfig.rpm.step);
+    setPowerDataList(getPowerDataList(gaugeConfig.power.max, gaugeConfig.power.step));
+    setRpmDataList(getRpmDataList(gaugeConfig.rpm.max, gaugeConfig.rpm.step));
 
-    setPowerDataList(powerList);
-    setRpmDataList(rpmList);
-
-    // Simulated fetch actions
     setPowerAngle(30); // Replace with dynamic fetch logic
     setRpmAngle(150); // Replace with dynamic fetch logic
-  };
+  }, []);
 
   useEffect(() => {
     handleRefreshData();
-  }, []);
+  }, [handleRefreshData]);
 
   return (
     <div className="lg:m-12 bg-black max-w-screen-lg">
@@ -72,8 +69,8 @@ export default function Home() {
         {/* Gauges */}
         <div className="flex bg-neutral-800 w-full border-b-2 border-neutral-500">
           <div className="flex justify-center w-full gap-24 p-4">
-            <SpeedGauge  angle={powerAngle} data={powerDataList || []} />
-            <SpeedGauge  angle={rpmAngle} data={rpmDataList || []} />
+            <SpeedGauge angle={powerAngle} data={powerDataList || []} />
+            <SpeedGauge angle={rpmAngle} data={rpmDataList || []} />
           </div>
         </div>
 
