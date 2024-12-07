@@ -1,11 +1,13 @@
 import './index.scss';
 
 interface SpeedGaugeProps {
+  title?: string,
   data: number[];
   angle: number;
+  speed?: string
 }
 
-const SpeedGauge = ({ data , angle }: SpeedGaugeProps) => {
+const SpeedGauge = ({ title, data, angle, speed }: SpeedGaugeProps) => {
 
   const digitalScaleElements = data.map(ds => (
     <li key={ds} className='digital-scale-item'>
@@ -29,8 +31,8 @@ const SpeedGauge = ({ data , angle }: SpeedGaugeProps) => {
 
           <div className='gears'>
             <div className="flex flex-wrap">
-              <span className="w-full text-center text-gray-200 text-sm">0</span>
-              <span className="w-full text-center text-gray-400 text-sm">kW</span>
+              <span className="w-full text-center text-gray-200 text-sm">{speed}</span>
+              <span className="w-full text-center text-gray-400 text-sm">{title}</span>
             </div>
           </div>
         </section>
