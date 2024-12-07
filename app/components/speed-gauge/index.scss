@@ -1,0 +1,75 @@
+@use 'sass:math';
+
+.speed-gauge {
+	position: relative;
+	width: 11rem;
+	height: 11rem;
+	$initialAngle: 36deg;
+	$eachScaleAngle: 36deg;
+
+	.digital-scale {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 1;
+
+		.digital-scale-item {
+			position: absolute;
+		}
+
+		$r: 4.7rem;
+		$digitalScaleLength: 17;
+		$digitalScaleStep: $eachScaleAngle;
+
+		@for $i from 1 through $digitalScaleLength {
+			.digital-scale-item:nth-child(#{$i}) {
+				$deg: (
+					$i - 1) * $digitalScaleStep + $initialAngle;
+				$x: -$r * math.sin($deg
+				);
+			$y: $r * math.cos($deg);
+			transform: translate($x, $y);
+		}
+	}
+}
+
+.pointer-box {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 3;
+
+	.pointer {
+		position: absolute;
+		width: 0.2rem;
+		height: 3.8rem;
+		border-radius: 0.5rem;
+		background-color: rgb(245, 242, 242);
+		transform-origin: top;
+		transform: translate(-50%, 0) rotate(calc(var(--pointer-initial-angle) + 36deg));
+	}
+
+}
+
+.gears {
+	position: absolute;
+	top: 78%;
+	left: 50%;
+	justify-content: center;
+	align-items: center;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+.text-2xs {
+	font-size: 0.6rem;
+	/* 12px */
+	line-height: 0.75rem;
+	/* 16px */
+}
+
+}

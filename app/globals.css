@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.m01{
+  margin: 0.1rem;
+}
+@layer components {
+  /* .btn-primary {
+      @apply py-1.5 px-3 text-center bg-blue-700 rounded-md text-white;
+  } */
+  input[type='range']::-webkit-slider-thumb {
+    @apply appearance-none w-5 h-5 bg-black outline outline-2 outline-white rounded-full cursor-grab transition-shadow hover:drop-shadow-lg ease-in-out;
+  }
+
+}
