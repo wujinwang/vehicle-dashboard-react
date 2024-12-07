@@ -19,7 +19,7 @@ jobs:
           ssh-private-key: SSH_PRIVATE_KEY
 
       - name: Add server to known_hosts
-        run: ssh-keyscan -H 35.203.101.153 >> ~/.ssh/known_hosts
+        run: ssh-keyscan -H 35.203.101.153 >> ~/.ssh/authorized_keys
 
       - name: Deploy to server
         run: |
