@@ -45,7 +45,8 @@ jobs:
             # Install dependencies and build
             npm install
             npm run build
-
+            npm run start -p 3001
+            
             # Restart NGINX (or your process manager)
             sudo systemctl restart nginx
           EOF
