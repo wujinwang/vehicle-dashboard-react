@@ -19,13 +19,19 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Verify SSH key is loaded
-        run: ssh-add -l
+        run: ssh-add -l  # Verify if the key was loaded successfully
 
       - name: Add server to known_hosts
-        run: ssh-keyscan -H 35.203.101.153 >> ~/.ssh/github-actions
+        run: |
+          mkdir -p ~/.ssh
+          # Add the server's public key to the known_hosts file
+          ssh-keyscan -H 35.203.101.153 >> ~/.ssh/known_hosts
+          # Ensure proper file permissions for the known_hosts file
+          chmod 600 ~/.ssh/known_hosts
 
       - name: Deploy to server
         run: |
+          # Test SSH connection with verbose output for debugging
           ssh -v root@35.203.101.153 << 'EOF'
             # Create the app directory if it doesn't exist
             [ ! -d "/app/react/vehicle-dashboard-react" ] && mkdir -p /app/react/vehicle-dashboard-react
