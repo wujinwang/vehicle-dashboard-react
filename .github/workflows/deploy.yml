@@ -3,7 +3,7 @@ name: Deploy Vehicle Dashboard App to Linux Server
 on:
   push:
     branches:
-      - main  # Adjust the branch you want to deploy from
+      - main  # Adjust to the branch you want to deploy from
 
 jobs:
   deploy:
@@ -11,19 +11,32 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Add server to known_hosts
+        run: ssh-keyscan -H 35.203.101.153 >> ~/.ssh/known_hosts
+
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no root@35.203.101.153 << 'EOF'
+          ssh root@35.203.101.153 << 'EOF'
+            # Navigate to app directory or clone if it doesn't exist
+            if [ ! -d "/app/react/vehicle-dashboard-react" ]; then
+              git clone git@github.com:wujinwang/vehicle-dashboard-react.git /app/react/vehicle-dashboard-react
+            fi
             cd /app/react/vehicle-dashboard-react
+
+            # Pull latest changes
             git pull origin main
+
+            # Install dependencies and build
             npm install
             npm run build
-            sudo systemctl restart nginx  # Or restart your server or process manager
+
+            # Restart the server (adjust for your setup)
+            sudo systemctl restart nginx  # Or adjust for PM2, systemctl, etc.
           EOF
