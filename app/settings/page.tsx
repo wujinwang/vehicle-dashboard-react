@@ -2,73 +2,124 @@
 
 import { useFormStatus } from "react-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
-import useDashboardStore from "./setting.store";
+import { useSettingStore } from "./setting.store";
 import { Button } from "../components/ui/button";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { AppSettingFormState } from "./definitions";
+import { Input } from "../components/ui/input";
+import { BatteryIcon, EngineIcon, EngineStatusIcon, ParkingIcon, PlugInIcon, TemperatureIcon } from "../components/ui/icons";
+import { Switch } from '@headlessui/react';
 
-export default function DashboardPage() {
+export default function SettingPage() {
 
-  const {
-    parkingIndicatorToggle,
-    engineIndicatorToggle,
-    motorStatusIndicatorToggle,
-    batteryLowIndicatorToggle,
-    rpmSpeed,
-    speedSetting,
-  } = useDashboardStore();
+  const [state, setState] = useState<AppSettingFormState>({ errors: {} });
+  const { rpm, power, battery } = useSettingStore();
+
+  const [isParking, setIsParking] = useState(false);
+  const [rpmSpeed, setRpmSpeed] = useState("100");
+  const [batteryLevel, setBatteryLevel] = useState("100");
 
   return (
     <div className="h-full">
-      <div className="">
-        <div className="mx-auto max-w-6xl">
-          <form method="post" className="mx-auto max-w-4xl">
 
-            <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2 m-12 border-b">
-              <div className="space-y-1">
-                <h2 className="text-base/7 font-semibold text-zinc-950 sm:text-sm/6 dark:text-white">Parking</h2>
-                <p data-slot="text" className="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">This will be displayed on your public profile.</p></div>
-              <div className="mb-12">
-                <span data-slot="control" className="relative block w-full before:absolute before:inset-px before:rounded-[calc(theme(borderRadius.lg)-1px)] before:bg-white before:shadow dark:before:hidden after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-inset after:ring-transparent sm:after:focus-within:ring-2 sm:after:focus-within:ring-blue-500 has-[[data-disabled]]:opacity-50 before:has-[[data-disabled]]:bg-zinc-950/5 before:has-[[data-disabled]]:shadow-none before:has-[[data-invalid]]:shadow-red-500/10"><input aria-label="Organization Name" className="relative block w-full appearance-none rounded-lg px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] sm:px-[calc(theme(spacing[3])-1px)] sm:py-[calc(theme(spacing[1.5])-1px)] text-base/6 text-zinc-950 placeholder:text-zinc-500 sm:text-sm/6 dark:text-white border border-zinc-950/10 data-[hover]:border-zinc-950/20 dark:border-white/10 dark:data-[hover]:border-white/20 bg-transparent dark:bg-white/5 focus:outline-none data-[invalid]:border-red-500 data-[invalid]:data-[hover]:border-red-500 data-[invalid]:dark:border-red-500 data-[invalid]:data-[hover]:dark:border-red-500 data-[disabled]:border-zinc-950/20 dark:data-[hover]:data-[disabled]:border-white/15 data-[disabled]:dark:border-white/15 data-[disabled]:dark:bg-white/[2.5%] dark:[color-scheme:dark]" id="headlessui-input-:r0:" data-headlessui-state="" value="Catalyst" name="name" /></span>
-              </div>
-            </section>
+      <div className="w-full">
+        <form method="post" >
 
-            <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2 m-12 border-b">
-              <div className="space-y-1">
-                <h2 className="text-base/7 font-semibold text-zinc-950 sm:text-sm/6 dark:text-white">Motor RPM</h2>
-                <p data-slot="text" className="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">This will be displayed on your public profile.</p></div>
-              <div className="mb-12">
-                <span data-slot="control" className="relative block w-full before:absolute before:inset-px before:rounded-[calc(theme(borderRadius.lg)-1px)] before:bg-white before:shadow dark:before:hidden after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-inset after:ring-transparent sm:after:focus-within:ring-2 sm:after:focus-within:ring-blue-500 has-[[data-disabled]]:opacity-50 before:has-[[data-disabled]]:bg-zinc-950/5 before:has-[[data-disabled]]:shadow-none before:has-[[data-invalid]]:shadow-red-500/10"><input aria-label="Organization Name" className="relative block w-full appearance-none rounded-lg px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] sm:px-[calc(theme(spacing[3])-1px)] sm:py-[calc(theme(spacing[1.5])-1px)] text-base/6 text-zinc-950 placeholder:text-zinc-500 sm:text-sm/6 dark:text-white border border-zinc-950/10 data-[hover]:border-zinc-950/20 dark:border-white/10 dark:data-[hover]:border-white/20 bg-transparent dark:bg-white/5 focus:outline-none data-[invalid]:border-red-500 data-[invalid]:data-[hover]:border-red-500 data-[invalid]:dark:border-red-500 data-[invalid]:data-[hover]:dark:border-red-500 data-[disabled]:border-zinc-950/20 dark:data-[hover]:data-[disabled]:border-white/15 data-[disabled]:dark:border-white/15 data-[disabled]:dark:bg-white/[2.5%] dark:[color-scheme:dark]" id="headlessui-input-:r0:" data-headlessui-state="" value="Catalyst" name="name" /></span>
-              </div>
-            </section>
+          <div className="lg:flex">
+            <div className="lg:w-1/2 lg:me-24 lg:mb-24">
+              <section className="grid sm:grid-cols-2 border-b">
+                <div className="flex my-4">
+                  <ParkingIcon className={"w-12 h-12 me-4" + (isParking ? " text-blue-500" : " text-neutral-500")} />
+                  <div className="">
+                    <h2 className="text-base/7 font-semibold text-zinc-950 sm:text-sm/6 dark:text-white">Parking</h2>
+                    <p data-slot="text" className="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">This will be displayed on your public profile.</p>
+                  </div>
+                </div>
+                <div className="my-4">
+                  <div className="flex mt-2 ">
+                    <Switch id="enabled" checked={isParking} onChange={setIsParking} className={`${isParking ? 'bg-blue-600' : 'bg-gray-200'} relative inline-flex h-5 w-11 items-center rounded-full`}									>
+                      <span className={`${isParking ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition`} />
+                    </Switch>
+                    <label htmlFor="iconClazz" className="block text-sm font-medium px-2 leading-6 text-gray-900">{isParking ? 'Parking' : 'No'}</label>
+                  </div>
+                </div>
+              </section>
 
-            <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2 m-12 border-b">
-              <div className="space-y-1">
-                <h2 className="text-base/7 font-semibold text-zinc-950 sm:text-sm/6 dark:text-white">Battery Percentage</h2>
-                <p data-slot="text" className="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">This will be displayed on your public profile.</p></div>
-              <div className="mb-12">
-                <span data-slot="control" className="relative block w-full before:absolute before:inset-px before:rounded-[calc(theme(borderRadius.lg)-1px)] before:bg-white before:shadow dark:before:hidden after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-inset after:ring-transparent sm:after:focus-within:ring-2 sm:after:focus-within:ring-blue-500 has-[[data-disabled]]:opacity-50 before:has-[[data-disabled]]:bg-zinc-950/5 before:has-[[data-disabled]]:shadow-none before:has-[[data-invalid]]:shadow-red-500/10"><input aria-label="Organization Name" className="relative block w-full appearance-none rounded-lg px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] sm:px-[calc(theme(spacing[3])-1px)] sm:py-[calc(theme(spacing[1.5])-1px)] text-base/6 text-zinc-950 placeholder:text-zinc-500 sm:text-sm/6 dark:text-white border border-zinc-950/10 data-[hover]:border-zinc-950/20 dark:border-white/10 dark:data-[hover]:border-white/20 bg-transparent dark:bg-white/5 focus:outline-none data-[invalid]:border-red-500 data-[invalid]:data-[hover]:border-red-500 data-[invalid]:dark:border-red-500 data-[invalid]:data-[hover]:dark:border-red-500 data-[disabled]:border-zinc-950/20 dark:data-[hover]:data-[disabled]:border-white/15 data-[disabled]:dark:border-white/15 data-[disabled]:dark:bg-white/[2.5%] dark:[color-scheme:dark]" id="headlessui-input-:r0:" data-headlessui-state="" value="Catalyst" name="name" /></span>
-              </div>
-            </section>
+              <section className="grid  sm:grid-cols-2 border-b">
+                <div className="flex my-4">
+                  <BatteryIcon className="w-12 h-12 text-neutral-500 me-4" />
+                  <div className="">
+                    <h2 className="text-base/7 font-semibold text-zinc-950 sm:text-sm/6 dark:text-white">Battery</h2>
+                    <p data-slot="text" className="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">This will be displayed on your public profile.</p>
+                  </div>
+                </div>
+                <div className="my-4">
+                  <div className="mb-1">{batteryLevel}%</div>
+                  <input type="range" min={0} max="100" value={batteryLevel} onChange={(e) => setBatteryLevel(e.target.value)} className="range range-lgaccent-white w-full h-3 bg-blue-500 rounded-lg appearance-none cursor-pointer" step="1" />
+                </div>
+              </section>
 
-            <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2 m-12 border-b">
-              <div className="space-y-1">
-                <h2 className="text-base/7 font-semibold text-zinc-950 sm:text-sm/6 dark:text-white">Power Status</h2>
-                <p data-slot="text" className="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">This will be displayed on your public profile.</p></div>
-              <div className="mb-12">
-                <span data-slot="control" className="relative block w-full before:absolute before:inset-px before:rounded-[calc(theme(borderRadius.lg)-1px)] before:bg-white before:shadow dark:before:hidden after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-inset after:ring-transparent sm:after:focus-within:ring-2 sm:after:focus-within:ring-blue-500 has-[[data-disabled]]:opacity-50 before:has-[[data-disabled]]:bg-zinc-950/5 before:has-[[data-disabled]]:shadow-none before:has-[[data-invalid]]:shadow-red-500/10"><input aria-label="Organization Name" className="relative block w-full appearance-none rounded-lg px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] sm:px-[calc(theme(spacing[3])-1px)] sm:py-[calc(theme(spacing[1.5])-1px)] text-base/6 text-zinc-950 placeholder:text-zinc-500 sm:text-sm/6 dark:text-white border border-zinc-950/10 data-[hover]:border-zinc-950/20 dark:border-white/10 dark:data-[hover]:border-white/20 bg-transparent dark:bg-white/5 focus:outline-none data-[invalid]:border-red-500 data-[invalid]:data-[hover]:border-red-500 data-[invalid]:dark:border-red-500 data-[invalid]:data-[hover]:dark:border-red-500 data-[disabled]:border-zinc-950/20 dark:data-[hover]:data-[disabled]:border-white/15 data-[disabled]:dark:border-white/15 data-[disabled]:dark:bg-white/[2.5%] dark:[color-scheme:dark]" id="headlessui-input-:r0:" data-headlessui-state="" value="Catalyst" name="name" /></span>
-              </div>
-            </section>
+              <section className="grid  sm:grid-cols-2 border-b">
+                <div className="flex my-4">
+                  <EngineStatusIcon className="w-12 h-12 text-neutral-500 me-4" />
+                  <div className="">
+                    <h2 className="text-base/7 font-semibold text-zinc-950 sm:text-sm/6 dark:text-white">Motor RPM</h2>
+                    <p data-slot="text" className="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">This will be displayed on your public profile.</p>
+                  </div>
+                </div>
+                <div className="my-4">
+                  <Input type="number" min={0} max={800} value={rpmSpeed}
+                    onChange={(e) => setRpmSpeed(e.target.value)}
+                  ></Input>
+                  {state?.errors?.configValue && (
+                    <p className="text-sm text-red-500">{state.errors.configValue}</p>
+                  )}
+                </div>
+              </section>
 
-            <section className="me-12 mb-12">
-              <div className="flex items-end justify-end my-8">
-                <CancelButton></CancelButton>
-                <SubmitButton></SubmitButton>
-              </div>
-            </section>
 
-          </form>
 
-        </div>
+            </div>
+            <div className="lg:w-1/2 mb-12 lg:me-12">
+              <section className="grid  sm:grid-cols-2 border-b">
+                <div className="flex my-4">
+                  <PlugInIcon className={"w-12 h-12 me-4" + (isParking ? " text-blue-500" : " text-neutral-500")} />
+                  <div className="">
+                    <h2 className="text-base/7 font-semibold text-zinc-950 sm:text-sm/6 dark:text-white">Charging status</h2>
+                    <p data-slot="text" className="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">Motor charging indicator</p>
+                  </div>
+                </div>
+                <div className="mt-8 text-lg">
+                  Charging
+                </div>
+              </section>
+
+              <section className="grid  sm:grid-cols-2 border-b">
+                <div className="flex my-4">
+                  <TemperatureIcon className={"w-12 h-12 me-4" + (isParking ? " text-blue-500" : " text-neutral-500")} />
+                  <div className="">
+                    <h2 className="text-base/7 font-semibold text-zinc-950 sm:text-sm/6 dark:text-white">Temperature</h2>
+                    <p data-slot="text" className="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">Motor temperature indicator</p>
+                  </div>
+                </div>
+                <div className="mt-8 text-lg">
+                  30
+                </div>
+              </section>
+
+            </div>
+
+          </div>
+
+
+
+
+
+
+
+        </form>
+
       </div>
     </div>
   );
@@ -79,12 +130,12 @@ export function CancelButton() {
   const { pending } = useFormStatus();
 
   const newBooking = () => {
-    const callbackUrl = "/checkout";
+    const callbackUrl = "/home";
     router.push(callbackUrl);
   }
 
   return (
-    <Button aria-disabled={pending} type="button" onClick={newBooking} className="mt-2 px-6 me-4 bg-gray-400">
+    <Button aria-disabled={pending} type="button" onClick={newBooking} className="mt-2 px-6 me-4 bg-gray-400" variant={"outline"}>
       {pending ? 'Submitting...' : 'Cancel'}
     </Button>
   );

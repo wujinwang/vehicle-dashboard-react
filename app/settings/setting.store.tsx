@@ -2,39 +2,24 @@
 import { create } from 'zustand';
 import { AppCode, SearchAppCodeReq } from '@/app/dashboard/definitions';
 
-interface DashboardStore {
-    parkingIndicatorToggle: boolean,
-    engineIndicatorToggle: boolean,
-    motorStatusIndicatorToggle: boolean,
-    batteryLowIndicatorToggle: boolean,
+interface SettingStore {
+    rpm: number;
+    power: number;
+    battery: number;
 
-    rpmSpeed: number;
-    speedSetting: number;
-
-    setParkingIndicatorToggle: (parkingIndicatorToggle: boolean) => void;
-    setEngineIndicatorToggle: (engineIndicatorToggle: boolean) => void;
-    setMotorStatusIndicatorToggle: (motorStatusIndicatorToggle: boolean) => void;
-    setBatteryLowIndicatorToggle: (batteryLowIndicatorToggle: boolean) => void;
-
-    setRpmSpeed: (rpmSpeed: number) =>  void;
-    setSpeedSetting: (speedSetting: number) =>  void;
+    setRpm: (rpm: number) => void;
+    setPower: (power: number) => void;
+    setBattery: (battery: number) => void;
 }
 
-export const useDashboardStore = create<DashboardStore>((set) => ({
-    parkingIndicatorToggle: false,
-    engineIndicatorToggle: false,
-    motorStatusIndicatorToggle: false,
-    batteryLowIndicatorToggle: false,
-    rpmSpeed: 0,
-    speedSetting: 0,
-    setParkingIndicatorToggle: (parkingIndicatorToggle: boolean) => set({ parkingIndicatorToggle }),
-    setEngineIndicatorToggle: (engineIndicatorToggle: boolean) => set({ engineIndicatorToggle }),
-    setMotorStatusIndicatorToggle: (motorStatusIndicatorToggle: boolean) => set({ motorStatusIndicatorToggle }),
-    setBatteryLowIndicatorToggle: (batteryLowIndicatorToggle: boolean) => set({ batteryLowIndicatorToggle }),
+export const useSettingStore = create<SettingStore>((set) => ({
+    rpm: 0,
+    power: 0,
+    battery: 0,
 
-    setRpmSpeed: (rpmSpeed: number) => set({ rpmSpeed }),
-    setSpeedSetting: (speedSetting: number) => set({ speedSetting }),
-
+    setRpm: (rpm: number) => set({ rpm }),
+    setPower: (power: number) => set({ power }),
+    setBattery: (battery: number) => set({ battery }),
 }));
 
-export default useDashboardStore;
+export default useSettingStore;
