@@ -23,6 +23,14 @@ body {
 .m01{
   margin: 0.1rem;
 }
+
+.text-2xs {
+	font-size: 0.6rem;
+	/* 12px */
+	line-height: 0.75rem;
+	/* 16px */
+}
+
 @layer components {
   /* .btn-primary {
       @apply py-1.5 px-3 text-center bg-blue-700 rounded-md text-white;

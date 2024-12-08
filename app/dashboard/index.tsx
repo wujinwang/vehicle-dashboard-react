@@ -94,14 +94,36 @@ export default function DashboardPage() {
       {/* Middle Row with Icons */}
       <div className="flex border-b-2 border-neutral-500 w-full h-24">
         <div className="border-r border-neutral-900 ">
-          <GearIcon className="w-12 h-12 ms-6 me-6 mt-4 text-neutral-500" />
-          <div className="w-full flex justify-center mt-1 text-neutral-500">N/N</div>
+          <GearIcon className="w-12 h-12 ms-6 me-6 mt-2 text-neutral-500" />
+          <div className="w-full flex justify-center mt-1 text-xs text-neutral-500">N/N</div>
         </div>
 
-        <BatteryIcon className="w-12 h-12 ms-12 mt-4 text-neutral-500" />
-        <TemperatureIcon className="w-12 h-12 ms-12 mt-4 text-neutral-500" />
-        <EngineStatusIcon className="w-12 h-12 ms-4 mt-4  text-neutral-500" />
+        <div className="border-r border-neutral-900 ">
+          <BatteryIcon className="w-12 h-12 ms-6 me-6 mt-2 justify-center text-neutral-500" />
+          <div className="w-full">
+            <div className="w-full  flex justify-center text-xs text-neutral-500">22</div>
+            <div className="w-full  flex justify-center text-xs text-neutral-500">%</div>
+          </div>
+        </div>
+
+        <div className="border-r border-neutral-900 ">
+          <TemperatureIcon className="w-12 h-10 ms-6 me-6 mt-3 text-neutral-500" />
+          <div className="w-full">
+            <div className="w-full  flex justify-center text-xs text-neutral-500">22</div>
+            <div className="w-full  flex justify-center text-xs text-neutral-500">%</div>
+          </div>
+        </div>
+
+        <div className="border-r border-neutral-900 ">
+          <EngineStatusIcon className="w-12 h-10 ms-6 me-6 mt-2 text-neutral-500" />
+          <div className="w-full">
+            <div className="w-full  flex justify-center text-xs text-neutral-500">0</div>
+            <div className="w-full  flex justify-center text-xs text-neutral-500">RPM</div>
+          </div>
+        </div>
+
         <SpeedSetting />
+        
       </div>
 
       {/* Bottom Row of Icons */}
