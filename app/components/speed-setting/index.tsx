@@ -8,14 +8,14 @@ const SpeedSetting = () => {
   const {
     parkingIndicatorToggle,
     engineIndicatorToggle,
-    motoStatusIndicatorToggle,
+    motorStatusIndicatorToggle,
     batteryLowIndicatorToggle,
     rpmSpeed,
     speedSetting,
 
     setParkingIndicatorToggle,
     setEngineIndicatorToggle,
-    setMotoStatusIndicatorToggle,
+    setMotorStatusIndicatorToggle,
     setBatteryLowIndicatorToggle,
 
     setRpmSpeed,
@@ -31,7 +31,7 @@ const SpeedSetting = () => {
     if (!isNaN(inputValue)) {
       setSpeedSetting(inputValue);
       setRpmSpeed(inputValue * speedStep);
-      setMotoStatusIndicatorToggle(inputValue >= 3 ? true : false);
+      setMotorStatusIndicatorToggle(inputValue >= 3 ? true : false);
     }
   };
 

@@ -6,11 +6,10 @@ import {
   EngineIcon,
   EngineRpmIcon,
   GearIcon,
-  LowBatteryIcon,
   OthersIcon,
   ParkingIcon,
   PlugInIcon,
-  StatusIcon,
+  EngineStatusIcon,
   TemperatureIcon,
 } from "@/app/components/ui/icons";
 import SpeedSetting from "@/app/components/speed-setting";
@@ -22,7 +21,7 @@ export default function DashboardPage() {
   const {
     parkingIndicatorToggle,
     engineIndicatorToggle,
-    motoStatusIndicatorToggle,
+    motorStatusIndicatorToggle,
     batteryLowIndicatorToggle,
     rpmSpeed,
     speedSetting,
@@ -78,10 +77,10 @@ export default function DashboardPage() {
     <main className="flex flex-col row-start-2 bg-black items-center sm:items-start">
       {/* Top Row of Icons */}
       <div className="flex border-b-2 border-neutral-500 w-full mt-2 pb-2">
-        <ParkingIcon className={"w-12 h-12 ms-4 " + (parkingIndicatorToggle ? " text-orange-800 " : "text-neutral-500")} />
-        <EngineIcon className={"w-12 h-12 ms-4 " + (engineIndicatorToggle ? " text-orange-800 " : "text-neutral-500")} />
-        <StatusIcon className={"w-12 h-12 ms-4 " + (motoStatusIndicatorToggle ? " text-orange-800 " : "text-neutral-500")} />
-        <BatteryIcon className={"w-12 h-12 ms-4 " + (batteryLowIndicatorToggle ? " text-orange-800 " : "text-neutral-500")} />
+        <ParkingIcon className={"w-12 h-12 ms-4 " + (parkingIndicatorToggle ? " text-red-600 " : "text-neutral-500")} />
+        <EngineIcon className={"w-12 h-12 ms-4 " + (engineIndicatorToggle ? " text-red-600 " : "text-neutral-500")} />
+        <EngineStatusIcon className={"w-12 h-12 ms-4 " + (motorStatusIndicatorToggle ? " text-red-600 " : "text-neutral-500")} />
+        <BatteryIcon className={"w-12 h-12 ms-4 " + (batteryLowIndicatorToggle ? " text-red-600 " : "text-neutral-500")} />
       </div>
 
       {/* Gauges */}
@@ -94,10 +93,14 @@ export default function DashboardPage() {
 
       {/* Middle Row with Icons */}
       <div className="flex border-b-2 border-neutral-500 w-full h-24">
-        <GearIcon className="w-12 h-12 ms-8 mt-4 text-neutral-500" />
-        <LowBatteryIcon className="w-12 h-12 ms-12 mt-4 text-neutral-500" />
+        <div className="border-r border-neutral-900 ">
+          <GearIcon className="w-12 h-12 ms-6 me-6 mt-4 text-neutral-500" />
+          <div className="w-full flex justify-center mt-1 text-neutral-500">N/N</div>
+        </div>
+
+        <BatteryIcon className="w-12 h-12 ms-12 mt-4 text-neutral-500" />
         <TemperatureIcon className="w-12 h-12 ms-12 mt-4 text-neutral-500" />
-        <EngineRpmIcon className="w-12 h-12 ms-12 mt-4 text-neutral-500" />
+        <EngineStatusIcon className="w-12 h-12 ms-4 mt-4  text-neutral-500" />
         <SpeedSetting />
       </div>
 
@@ -105,7 +108,7 @@ export default function DashboardPage() {
       <div className="flex border-b-2 border-neutral-500 w-full h-20 justify-between">
         <div className="flex">
           <GearIcon className="w-12 h-12 ms-4 mt-4 text-neutral-500" />
-          <EngineRpmIcon className="w-12 h-12 ms-8 mt-4 text-neutral-500" />
+          <EngineStatusIcon className="w-12 h-12 ms-4 mt-4  text-neutral-500" />
           <TemperatureIcon className="w-12 h-12 ms-8 mt-4 text-neutral-500" />
           <div className="flex bg-neutral-800 w-20 ms-24">
             <div className="w-full rounded border border-zinc-950 m01">

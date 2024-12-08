@@ -24,54 +24,40 @@ export function ParkingIcon(props: React.SVGProps<SVGSVGElement>) {
 
 export function EngineIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
-        <svg  {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512.009 512.009"
-            strokeWidth="1"
-            fill="currentColor"
-            stroke="currentColor" >
-            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-            <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-            <g id="SVGRepo_iconCarrier">
-                <g>
-                    <g>
-                        <path d="M494.32,196.801l-4.858-8.131h-85.516v39.564h-8.557v-57.371h-44.32l-28.138-24.95h-46.53v-22.695h14.966V89.827H172.742 v33.391h14.966v22.695h-48.443l-28.138,24.95H55.791v16.696v66.236h-22.4v-42.616H0v118.625h33.391v-42.617h22.4v66.236v16.696 h83.474l58.709,52.054h197.414v-58.444h8.557v39.565h85.516l4.858-8.132c1.81-3.027,17.68-31.537,17.68-99.181 S496.13,199.829,494.32,196.801z M221.101,123.22h21.909v22.695h-21.909V123.22z M468.927,369.902h-31.59v-39.565h-75.34v58.444 H210.646l-58.709-52.054H89.183V204.255h34.617l28.138-24.95h158.32l28.138,24.95h23.601v57.371h75.34v-39.564h31.59 c3.873,11.386,9.681,34.956,9.681,73.921C478.609,334.947,472.801,358.516,468.927,369.902z"></path>
-                    </g>
-                </g>
-            </g>
+        <svg  {...props} fill="none" stroke="currentColor" strokeWidth="80" viewBox="0 50 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <path transform="rotate(180 512 512)" d="M512 64c-181.1 0-328 146.9-328 328 0 121.4 66 227.4 164 284.1V792c0 17.7 14.3 32 32 32h264c17.7 0 32-14.3 32-32V676.1c98-56.7 164-162.7 164-284.1 0-181.1-146.9-328-328-328z" />
         </svg>
     );
 }
 
 
-export function StatusIcon(props: React.SVGProps<SVGSVGElement>) {
+export function EngineStatusIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
-        <svg  {...props} height="24px" width="24px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 398.528 398.528" fill="currentColor"
-            stroke="currentColor"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M315.232,9.015C311.883,3.276,305.681,0,298.244,0h-91.308c-10.9,0-22.224,7.113-26.93,16.924 L83.17,218.041c-3.162,6.56-2.967,13.518,0.471,19.037c3.463,5.568,9.592,8.811,16.859,8.966l71.662,0.902l-51.877,129.675 c-1.276,3.235-3.959,10.014,0.821,16.981c2.089,3.056,5.674,4.926,9.364,4.926h0.837c6.999,0,11.217-5.308,13.241-7.868 L312.176,180.17c7.153-8.966,4.202-17.013,3.121-19.354c-1.122-2.243-5.625-9.592-17.046-9.592h-53.34l69.8-122.985 C318.37,21.752,318.573,14.729,315.232,9.015z"></path> </g> </g></svg>
+        <svg  {...props} viewBox="0 -0.5 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <g fill="currentColor"
+                stroke="currentColor" strokeWidth="0.01">
+                <g transform="translate(4.000000, 0.000000)" fill="currentColor">
+                    <path d="M7.56,1.003 L5.907,1.003 L5.907,0.031 L3,0.031 L3,1.003 L1.4,1.003 C0.634,1.003 0.016,1.523 0.016,2.166 L0.016,14.799 C0.016,15.442 0.634,15.963 1.4,15.963 L7.559,15.963 C8.321,15.963 8.941,15.442 8.941,14.799 L8.941,2.166 C8.941,1.522 8.321,1.003 7.56,1.003 L7.56,1.003 Z M8.031,14.47 C8.031,14.813 7.707,15.09 7.311,15.09 L1.632,15.09 C1.237,15.09 0.913,14.813 0.913,14.47 L0.913,2.529 C0.913,2.186 1.237,1.908 1.632,1.908 L7.311,1.908 C7.707,1.908 8.031,2.186 8.031,2.529 L8.031,14.47 L8.031,14.47 Z">
+                    </path>
+                    <path d="M6,3.006 L2.041,10.689 L4.005,9.42 L3.016,14.004 L6.968,6.183 L4.881,7.5 L6,3.006 Z">
+                    </path>
+                </g>
+            </g>
+        </svg>
     )
 }
 
 
 export function BatteryIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
-        <svg  {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512.009 512.009"
-            strokeWidth="1"
+        <svg  {...props} viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" strokeWidth="1"
             fill="currentColor"
-            stroke="currentColor"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path className="st0" d="M344.552,54.992V0H167.448v54.992H99.925V512h312.15V54.992H344.552z M365.86,465.785H146.14V101.207h67.524 V46.211h84.674v54.996h67.524V465.785z"></path> <polygon points="286.876,163.949 200.188,283.438 250.95,297.496 235.852,386.582 311.812,273.637 261.048,259.582 "></polygon> </g> </g>
+            stroke="currentColor">
+            <path fill="currentColor" d="M201 16c-15 0-20 3.38-20 20v15h-45c-29.547 0-35 5.453-35 35v375c0 29.547 5.453 35 35 35h240c29.547 0 35-5.453 35-35V86c0-29.547-5.453-35-35-35h-45V36c0-16.62-5-20-20-20H201zm-48.094 69.813c4.666.02 10.594.187 18.094.187h170c40 0 35-5 35 35v305c0 40 5 35-35 35H171c-40 0-35 5-35-35V121c0-32.5-3.31-35.283 16.906-35.188zM161 371c-5.54 0-10 4.46-10 10v55c0 5.54 4.46 10 10 10h190c5.54 0 10-4.46 10-10v-55c0-5.54-4.46-10-10-10H161z" />
+            <text fill="currentColor" x="256" y="256" fontSize="180" fontWeight="bold" textAnchor="middle" dy=".3em" >%</text>
         </svg>
     );
 }
-
-
-export function LowBatteryIcon(props: React.SVGProps<SVGSVGElement>) {
-    return (
-        <svg {...props} fill="currentColor"
-            stroke="currentColor" width="64px" height="64px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>battery-25</title> <path d="M12.563 1c-0.937 0-1.25 0.211-1.25 1.25v0.937h-2.813c-1.847 0-2.187 0.341-2.187 2.187v23.438c0 1.847 0.341 2.187 2.187 2.187h15c1.847 0 2.187-0.341 2.187-2.187v-23.438c0-1.847-0.341-2.187-2.187-2.187h-2.813v-0.937c0-1.038-0.312-1.25-1.25-1.25h-6.875zM8.5 7.563c0-2.5-0.312-2.187 2.187-2.187 1.25 0 9.688 0 10.625 0 2.5 0 2.187-0.312 2.187 2.187 0 1.25 0 17.813 0 19.063 0 2.5 0.312 2.187-2.187 2.187-1.25 0-9.375 0-10.625 0-2.5 0-2.187 0.312-2.187-2.187 0-1.251 0-17.813 0-19.063zM10.062 23.188h11.875c0.345 0 0.625 0.28 0.625 0.625v3.438c0 0.345-0.28 0.625-0.625 0.625h-11.875c-0.345 0-0.625-0.28-0.625-0.625v-3.438c0-0.345 0.28-0.625 0.625-0.625z"></path> </g></svg>
-    );
-}
-
 
 export function GearIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
@@ -135,9 +121,9 @@ export function PlugInIcon(props: React.SVGProps<SVGSVGElement>) {
         <svg {...props} height="64px" width="64px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 49.83 49.83" fill="currentColor"
             stroke="currentColor" strokeWidth="0.0004983300000000001"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
             <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-            <g id="SVGRepo_iconCarrier"> 
-                <path d="M49.833,24.917c0,13.739-11.178,24.917-24.916,24.917c-0.828,0-1.5-0.671-1.5-1.5V36.259 c-5.606-0.739-9.952-5.537-9.952-11.342c0-0.829,0.672-1.5,1.5-1.5h3.073V13.94c0-0.829,0.672-1.5,1.5-1.5 c0.828,0,1.5,0.671,1.5,1.5v9.477h7.757V13.94c0-0.829,0.672-1.5,1.5-1.5c0.828,0,1.5,0.671,1.5,1.5v9.477h3.074 c0.828,0,1.5,0.671,1.5,1.5c0,5.805-4.346,10.603-9.952,11.342v10.524c11.388-0.773,20.416-10.285,20.416-21.866 C46.833,12.832,37.002,3,24.917,3C12.832,3,3,12.832,3,24.917c0,4.599,1.408,9,4.071,12.727c0.481,0.674,0.325,1.611-0.349,2.092 c-0.675,0.482-1.611,0.326-2.093-0.348C1.602,35.148,0,30.145,0,24.917C0,11.178,11.178,0,24.917,0 C38.655,0,49.833,11.178,49.833,24.917z"></path> 
-                </g>
-                </svg>
+            <g id="SVGRepo_iconCarrier">
+                <path d="M49.833,24.917c0,13.739-11.178,24.917-24.916,24.917c-0.828,0-1.5-0.671-1.5-1.5V36.259 c-5.606-0.739-9.952-5.537-9.952-11.342c0-0.829,0.672-1.5,1.5-1.5h3.073V13.94c0-0.829,0.672-1.5,1.5-1.5 c0.828,0,1.5,0.671,1.5,1.5v9.477h7.757V13.94c0-0.829,0.672-1.5,1.5-1.5c0.828,0,1.5,0.671,1.5,1.5v9.477h3.074 c0.828,0,1.5,0.671,1.5,1.5c0,5.805-4.346,10.603-9.952,11.342v10.524c11.388-0.773,20.416-10.285,20.416-21.866 C46.833,12.832,37.002,3,24.917,3C12.832,3,3,12.832,3,24.917c0,4.599,1.408,9,4.071,12.727c0.481,0.674,0.325,1.611-0.349,2.092 c-0.675,0.482-1.611,0.326-2.093-0.348C1.602,35.148,0,30.145,0,24.917C0,11.178,11.178,0,24.917,0 C38.655,0,49.833,11.178,49.833,24.917z"></path>
+            </g>
+        </svg>
     );
 }
