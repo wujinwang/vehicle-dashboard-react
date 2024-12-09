@@ -3,36 +3,30 @@ import { create } from 'zustand';
 import { AppCode, SearchAppCodeReq } from '@/app/dashboard/definitions';
 
 interface DashboardStore {
-    parkingIndicatorToggle: boolean,
-    engineIndicatorToggle: boolean,
-    motorStatusIndicatorToggle: boolean,
-    batteryLowIndicatorToggle: boolean,
+    isParking: boolean,
+    isBatteryLow: boolean,
 
-    rpmSpeed: number;
+    rpm: number;
     speedSetting: number;
 
-    setParkingIndicatorToggle: (parkingIndicatorToggle: boolean) => void;
-    setEngineIndicatorToggle: (engineIndicatorToggle: boolean) => void;
-    setMotorStatusIndicatorToggle: (motorStatusIndicatorToggle: boolean) => void;
-    setBatteryLowIndicatorToggle: (batteryLowIndicatorToggle: boolean) => void;
-
-    setRpmSpeed: (rpmSpeed: number) =>  void;
+    setIsParking: (isParking: boolean) => void;
+   
+    setRpm: (rpm: number) =>  void;
     setSpeedSetting: (speedSetting: number) =>  void;
 }
 
 export const useDashboardStore = create<DashboardStore>((set) => ({
-    parkingIndicatorToggle: false,
-    engineIndicatorToggle: false,
-    motorStatusIndicatorToggle: false,
-    batteryLowIndicatorToggle: false,
-    rpmSpeed: 0,
-    speedSetting: 0,
-    setParkingIndicatorToggle: (parkingIndicatorToggle: boolean) => set({ parkingIndicatorToggle }),
-    setEngineIndicatorToggle: (engineIndicatorToggle: boolean) => set({ engineIndicatorToggle }),
-    setMotorStatusIndicatorToggle: (motorStatusIndicatorToggle: boolean) => set({ motorStatusIndicatorToggle }),
-    setBatteryLowIndicatorToggle: (batteryLowIndicatorToggle: boolean) => set({ batteryLowIndicatorToggle }),
 
-    setRpmSpeed: (rpmSpeed: number) => set({ rpmSpeed }),
+    isParking:false,
+    isBatteryLow:false,
+
+    rpm: 0,
+    speedSetting: 0,
+   
+    setIsParking: (isParking: boolean) => set({ isParking }),
+    setIsBatteryLow: (isBatteryLow: boolean) => set({ isBatteryLow }),
+
+    setRpm: (rpm: number) => set({ rpm }),
     setSpeedSetting: (speedSetting: number) => set({ speedSetting }),
 
 }));

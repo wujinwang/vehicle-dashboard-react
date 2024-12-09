@@ -4,7 +4,6 @@ import SpeedGauge from "@/app/components/speed-gauge";
 import {
   BatteryIcon,
   EngineIcon,
-  EngineRpmIcon,
   GearIcon,
   OthersIcon,
   ParkingIcon,
@@ -19,11 +18,9 @@ import useDashboardStore from "./dashboard.store";
 export default function DashboardPage() {
 
   const {
-    parkingIndicatorToggle,
-    engineIndicatorToggle,
-    motorStatusIndicatorToggle,
-    batteryLowIndicatorToggle,
-    rpmSpeed,
+    isParking,
+    isBatteryLow,
+    rpm,
     speedSetting,
   } = useDashboardStore();
 
@@ -59,7 +56,7 @@ export default function DashboardPage() {
 
   const handleResetAngle = () => {
     //8 of 10 slices, 360x8/10
-    const rmpAngleTmp: number = 288 * rpmSpeed / gaugeConfig.rpm.max;
+    const rmpAngleTmp: number = 288 * rpm / gaugeConfig.rpm.max;
     setRpmAngle(rmpAngleTmp);
   };
 
@@ -77,17 +74,17 @@ export default function DashboardPage() {
     <main className="flex flex-col row-start-2 bg-black items-center sm:items-start">
       {/* Top Row of Icons */}
       <div className="flex border-b-2 border-neutral-500 w-full mt-2 pb-2">
-        <ParkingIcon className={"w-12 h-12 ms-4 " + (parkingIndicatorToggle ? " text-red-600 " : "text-neutral-500")} />
-        <EngineIcon className={"w-12 h-12 ms-4 " + (engineIndicatorToggle ? " text-red-600 " : "text-neutral-500")} />
-        <EngineStatusIcon className={"w-12 h-12 ms-4 " + (motorStatusIndicatorToggle ? " text-red-600 " : "text-neutral-500")} />
-        <BatteryIcon className={"w-12 h-12 ms-4 " + (batteryLowIndicatorToggle ? " text-red-600 " : "text-neutral-500")} />
+        <ParkingIcon className={"w-12 h-12 ms-4 " + (isParking ? " text-red-600 " : "text-neutral-500")} />
+        <EngineIcon className={"w-12 h-12 ms-4 text-neutral-500"} />
+        <EngineStatusIcon className={"w-12 h-12 ms-4 text-neutral-500"} />
+        <BatteryIcon className={"w-12 h-12 ms-4 " + (isBatteryLow ? " text-red-600 " : "text-neutral-500")} />
       </div>
 
       {/* Gauges */}
       <div className="flex bg-neutral-800 w-full border-b-2 border-neutral-500">
         <div className="flex justify-center w-full gap-24 p-4">
-          <SpeedGauge title="kW" speed={rpmSpeed + ""} angle={powerAngle} data={powerDataList || []} />
-          <SpeedGauge title="RPM" speed={rpmSpeed + ""} angle={rpmAngle} data={rpmDataList || []} />
+          <SpeedGauge title="kW" speed={rpm + ""} angle={powerAngle} data={powerDataList || []} />
+          <SpeedGauge title="RPM" speed={rpm + ""} angle={rpmAngle} data={rpmDataList || []} />
         </div>
       </div>
 

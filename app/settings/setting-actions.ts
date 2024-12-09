@@ -8,6 +8,7 @@ import {
     AppSettingFormState,
     CreateAppSettingReq,
     SearchAppSettingReq,
+    SettingResponse,
     UpdateAppSettingReq,
 } from '@/app/settings/definitions';
 import { DataResponse } from '@/app/components/definitions';
@@ -73,8 +74,8 @@ export const createAppSettingAction = async (req: CreateAppSettingReq): Promise<
  * @param parentCode The ID of the appSetting for which to fetch appSetting.
  * @returns A Promise that resolves with an object containing either the data or an error message.
  */
-export const fetchSettingsAction = async (parentCode: string): Promise<{ data: AppSetting | null, error: string | null }> => {
-    return await api.get<AppSetting>(`${BASE_URL}s`).then((res: ApiResponse<AppSetting>) => {
+export const fetchSettingsAction = async (parentCode: string): Promise<{ data: SettingResponse | null, error: string | null }> => {
+    return await api.get<SettingResponse>(`${BASE_URL}s`).then((res: ApiResponse<SettingResponse>) => {
         //console.log("--------fetchAppSettingAction---------" + JSON.stringify(res));
         return { data: res.data, error: null };
     }).catch((error) => {
@@ -106,7 +107,7 @@ export const fetchAppSettingAction = async (id: number): Promise<{ data: AppSett
  * @returns A Promise resolving with the updated appSetting or an error message.
  */
 export const updateAppSettingAction = async (req: UpdateAppSettingReq): Promise<{ data: AppSetting | null, error: string | null }> => {
-    return await api.put<AppSetting>(`${BASE_URL}/${req.id}`, req).then((res: ApiResponse<AppSetting>) => {
+    return await api.put<AppSetting>(`${BASE_URL}`, req).then((res: ApiResponse<AppSetting>) => {
         return { data: res.data, error: null };
     }).catch((error) => {
         const errorMessage = handleApiError(error, 'Failed to update appSetting.');

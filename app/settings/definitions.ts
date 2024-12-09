@@ -36,13 +36,9 @@ export interface CreateAppSettingReq {
 }
 
 export interface UpdateAppSettingReq {
-  id: number;
+  parentCode: string;
   code: string;
   configValue: string;
-  parentCode: string;
-  name: string;
-  memo: string;
-  enabled: string;
 }
 
 export interface SearchAppSettingReq {
@@ -57,4 +53,13 @@ export interface AppSetting {
   name: string;
   memo: string;
   enabled: string;
+}
+
+
+export interface SettingResponse {
+  rpm: string;
+  battery: string;
+  power: string;
+  temperature: string;
+  isCharging:boolean
 }
