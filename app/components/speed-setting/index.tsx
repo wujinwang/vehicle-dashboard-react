@@ -57,7 +57,7 @@ const SpeedSetting = () => {
   };
 
 
-  const handleSpeedSetting = async (val: string) => {
+  const handleSpeedSettingChange = async (val: string) => {
     const inputValue = parseFloat(val);
     // Check if the parsed value is a valid number
     if (!isNaN(inputValue)) {
@@ -71,7 +71,6 @@ const SpeedSetting = () => {
       }
 
       handleAppSettingUpdateSubmit("APP_SETTING_RPM", sp + "");
-
     }
   };
 
@@ -98,7 +97,7 @@ const SpeedSetting = () => {
   return (
     <div className="ms-12 mt-2">
       <div className="ms-10 text-xs text-white mb-1">MOTOR SPEED SETTING</div>
-      <input type="range" min={0} max="4" value={speedSetting} onChange={(e) => handleSpeedSetting(e.target.value)} className="range range-lgaccent-white w-64 h-3 bg-neutral-800 rounded-lg appearance-none cursor-pointer" step="1" />
+      <input type="range" min={0} max="4" value={speedSetting} onChange={(e) => handleSpeedSettingChange(e.target.value)} className="range range-lgaccent-white w-64 h-3 bg-neutral-800 rounded-lg appearance-none cursor-pointer" step="1" />
 
       <div className="flex w-full justify-between text-xs text-white">
         <span className="ms-0">OFF</span>

@@ -14,6 +14,9 @@ import {
 import SpeedSetting from "@/app/components/speed-setting";
 import { useCallback, useEffect, useState } from "react";
 import useDashboardStore from "./dashboard.store";
+import { UpdateAppSettingReq } from "../settings/definitions";
+import { updateAppSettingAction } from "../settings/setting-actions";
+import { showErrorMessage, showSuccessMessage } from "../components/Toast";
 
 export default function DashboardPage() {
 
@@ -23,6 +26,10 @@ export default function DashboardPage() {
     rpm,
     speedSetting,
   } = useDashboardStore();
+
+  const settingCode = "APP_SETTING";
+  const [isCharging, setIsCharging] = useState(false);
+
 
   const [powerAngle, setPowerAngle] = useState(36);
   const [rpmAngle, setRpmAngle] = useState(144);
@@ -60,6 +67,12 @@ export default function DashboardPage() {
     setRpmAngle(rmpAngleTmp);
   };
 
+  const handlePluginClick = () => {
+    const newIsCharging = !isCharging; 
+    console.log("----handlePluginClick------",isCharging);
+    handleAppSettingUpdateSubmit("APP_SETTING_IS_CHARGING", newIsCharging ? "1" : "0");
+    setIsCharging(newIsCharging);   
+  }
 
   useEffect(() => {
     initData();
@@ -69,6 +82,25 @@ export default function DashboardPage() {
   useEffect(() => {
     handleResetAngle();
   }, [speedSetting]);
+
+  // Handler to update readOnly state after submission
+  const handleAppSettingUpdateSubmit = (code: string, val: string) => {
+    const req: UpdateAppSettingReq = {
+      parentCode: settingCode,//constant value for this function.
+      code: code,
+      configValue: val,
+    };
+
+    updateAppSettingAction(req).then((res) => {
+      console.log("---------updateAppSettingAction-----", res);
+      if (res.error) {
+        showErrorMessage(res.error); // Show error on the client
+      } else if (res.data) {
+        showSuccessMessage("updated successfully.");
+      }
+    });
+
+  };
 
   return (
     <main className="flex flex-col row-start-2 bg-black items-center sm:items-start">
@@ -118,17 +150,21 @@ export default function DashboardPage() {
             <div className="w-full  flex justify-center text-xs text-neutral-500">RPM</div>
           </div>
         </div>
-
         <SpeedSetting />
-        
       </div>
 
       {/* Bottom Row of Icons */}
       <div className="flex border-b-2 border-neutral-500 w-full h-20 justify-between">
         <div className="flex">
-          <GearIcon className="w-12 h-12 ms-4 mt-4 text-neutral-500" />
-          <EngineStatusIcon className="w-12 h-12 ms-4 mt-4  text-neutral-500" />
-          <TemperatureIcon className="w-12 h-12 ms-8 mt-4 text-neutral-500" />
+          <div className="border-r border-neutral-900 ">
+            <GearIcon className="w-12 h-12 ms-4 me-4 mt-4 text-neutral-500" />
+          </div>
+          <div className="border-r border-neutral-900 ">
+            <EngineStatusIcon className="w-12 h-12 ms-4 me-4 mt-4  text-neutral-500" />
+          </div>
+          <div className="border-r border-neutral-900 ">
+            <TemperatureIcon className="w-12 h-12 ms-4 me-4 mt-4 text-neutral-500" />
+          </div>
           <div className="flex bg-neutral-800 w-20 ms-24">
             <div className="w-full rounded border border-zinc-950 m01">
               <OthersIcon className="w-12 h-12 text-neutral-300 m-3" />
@@ -136,7 +172,7 @@ export default function DashboardPage() {
           </div>
         </div>
         <div className="flex items-center me-4">
-          <PlugInIcon className="w-14 h-14 text-neutral-500" />
+          <PlugInIcon className={"w-14 h-14 " + (isCharging ? " text-red-600 " : "text-neutral-500")} onClick={(e) => handlePluginClick()} />
         </div>
       </div>
     </main>
