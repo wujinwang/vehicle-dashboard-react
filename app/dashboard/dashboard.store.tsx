@@ -5,29 +5,50 @@ import { AppCode, SearchAppCodeReq } from '@/app/dashboard/definitions';
 interface DashboardStore {
     isParking: boolean,
     isBatteryLow: boolean,
+    isCharging: boolean,
+
+    isMotorStatusIndicator:boolean,
 
     rpm: number;
+    power: number;
     speedSetting: number;
+    temperature: number;
 
-    setIsParking: (isParking: boolean) => void;
-   
-    setRpm: (rpm: number) =>  void;
-    setSpeedSetting: (speedSetting: number) =>  void;
+    setParking: (isParking: boolean) => void;
+    setBatteryLow: (isBatteryLow: boolean) => void,
+    setCharging: (isCharging: boolean) => void,
+
+    setMotorStatusIndicator: (isMotorStatusIndicator: boolean) => void,
+
+    setRpm: (rpm: number) => void;
+    setPower: (power: number) => void;
+    setSpeedSetting: (speedSetting: number) => void;
+    setTemperature: (temperature: number) => void;
 }
 
 export const useDashboardStore = create<DashboardStore>((set) => ({
 
-    isParking:false,
-    isBatteryLow:false,
+    isParking: false,
+    isBatteryLow: false,
+    isCharging: false,
+
+    isMotorStatusIndicator:false,
 
     rpm: 0,
+    power:0,
     speedSetting: 0,
-   
-    setIsParking: (isParking: boolean) => set({ isParking }),
-    setIsBatteryLow: (isBatteryLow: boolean) => set({ isBatteryLow }),
+    temperature: 0,
+
+    setParking: (isParking: boolean) => set({ isParking }),
+    setBatteryLow: (isBatteryLow: boolean) => set({ isBatteryLow }),
+    setCharging: (isCharging: boolean) => set({ isCharging }),
+
+    setMotorStatusIndicator: (isMotorStatusIndicator: boolean) => set({ isMotorStatusIndicator }),
 
     setRpm: (rpm: number) => set({ rpm }),
+    setPower: (power: number) => set({ power }),
     setSpeedSetting: (speedSetting: number) => set({ speedSetting }),
+    setTemperature: (temperature: number) => set({ temperature }),
 
 }));
 

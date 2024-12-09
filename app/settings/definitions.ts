@@ -61,5 +61,6 @@ export interface SettingResponse {
   battery: string;
   power: string;
   temperature: string;
+  gearRatio: string;
   isCharging:boolean
 }

@@ -36,7 +36,7 @@ export function EngineIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 
-export function EngineStatusIcon(props: React.SVGProps<SVGSVGElement>) {
+export function MotorStatusIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
         <svg  {...props} viewBox="0 -0.5 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <g fill="currentColor"
@@ -81,7 +81,7 @@ export function TemperatureIcon(props: React.SVGProps<SVGSVGElement>) {
     )
 }
 
-export function EngineRpmIcon(props: React.SVGProps<SVGSVGElement>) {
+export function PowerIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
         <svg
             {...props}

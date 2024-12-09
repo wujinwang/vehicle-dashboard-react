@@ -9,50 +9,31 @@ const SpeedSetting = () => {
 
   //Get value from store
   const {
-    isParking,
+    rpm,
     speedSetting,
+    isCharging,
 
-    setIsParking,
+    setParking,
     setRpm,
-    setSpeedSetting
+    setSpeedSetting,
+    setMotorStatusIndicator
   } = useDashboardStore();
 
   const speedStep: number = 200;
   const settingCode = "APP_SETTING";
 
   useEffect(() => {
-    handleFetchSettingAction();
-
-    // Set up an interval to call the handleFetchSettingAction function every 5 seconds
-    const intervalId = setInterval(() => {
-      handleFetchSettingAction();
-    }, 1000);
-    // Clear the interval when the component unmounts
-    return () => clearInterval(intervalId);
-
-  }, []);
-
-  const handleFetchSettingAction = async () => {
-    fetchSettingsAction(settingCode).then((res) => {
-      if (res.error) {
-        showErrorMessage(res.error); // Show error on the client
-      } else if (res.data) {
-        console.log("---------res-----", res.data);
-        const inputValue = parseFloat(res.data.rpm);
-        setRpm(inputValue);
-        convertRpmToSpeedSetting(inputValue);
-      }
-    })
-  };
+    convertRpmToSpeedSetting(rpm);
+  }, [rpm]);
 
   const convertRpmToSpeedSetting = async (val: number) => {
-    console.log("-----val/speedStep---", val / speedStep);
+    //console.log("-----val/speedStep---", val / speedStep);
     const s = val / speedStep + "";
     setSpeedSetting(parseInt(s));
 
-    setIsParking(false);
+    setParking(false);
     if (val == 0) {
-      setIsParking(true);
+      setParking(true);
     }
   };
 
@@ -65,9 +46,15 @@ const SpeedSetting = () => {
       setSpeedSetting(inputValue);
       setRpm(sp);
 
-      setIsParking(false);
+      setParking(false);
       if (sp == 0) {
-        setIsParking(true);
+        setParking(true);
+      }
+
+      //if RPM > 599 show indicator
+      setMotorStatusIndicator(false);
+      if (sp > 599) {
+        setMotorStatusIndicator(true);
       }
 
       handleAppSettingUpdateSubmit("APP_SETTING_RPM", sp + "");
@@ -83,7 +70,7 @@ const SpeedSetting = () => {
     };
 
     updateAppSettingAction(req).then((res) => {
-      console.log("---------updateAppSettingAction-----", res);
+      //console.log("---------updateAppSettingAction-----", res);
       if (res.error) {
         showErrorMessage(res.error); // Show error on the client
       } else if (res.data) {
@@ -97,7 +84,7 @@ const SpeedSetting = () => {
   return (
     <div className="ms-12 mt-2">
       <div className="ms-10 text-xs text-white mb-1">MOTOR SPEED SETTING</div>
-      <input type="range" min={0} max="4" value={speedSetting} onChange={(e) => handleSpeedSettingChange(e.target.value)} className="range range-lgaccent-white w-64 h-3 bg-neutral-800 rounded-lg appearance-none cursor-pointer" step="1" />
+      <input type="range" disabled={isCharging}  min={0} max="4" value={speedSetting} onChange={(e) => handleSpeedSettingChange(e.target.value)} className="range range-lgaccent-white w-64 h-3 bg-neutral-800 rounded-lg appearance-none cursor-pointer" step="1" />
 
       <div className="flex w-full justify-between text-xs text-white">
         <span className="ms-0">OFF</span>

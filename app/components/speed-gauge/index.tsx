@@ -9,6 +9,8 @@ interface SpeedGaugeProps {
 
 const SpeedGauge = ({ title, data, angle, speed }: SpeedGaugeProps) => {
 
+  console.log("----------angle-------------",angle);
+
   const digitalScaleElements = data.map(ds => (
     <li key={ds} className='digital-scale-item'>
       {ds}
