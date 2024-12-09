@@ -1,5 +1,3 @@
-import { showErrorMessage } from '@/app/components/Toast';
-
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL; // Ensure this is set in environment variables
 
 export interface ApiResponse<T> {
@@ -102,8 +100,9 @@ async function handleResponseError<T>(
     url: string,
     options: RequestOptions,
 ): Promise<ApiResponse<T>> {
+
     if (response.status === 401) {
-        console.log('Token expired, attempting refresh...');
+        console.log('Token expired, attempting refresh...',url,options);
     }
 
     const errorResponse = await response.json();

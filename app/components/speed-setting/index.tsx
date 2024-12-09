@@ -1,8 +1,8 @@
 "use client"
 import useDashboardStore from "@/app/dashboard/dashboard.store";
 import { UpdateAppSettingReq } from "@/app/settings/definitions";
-import { fetchSettingsAction, updateAppSettingAction } from "@/app/settings/setting-actions";
-import { useEffect, useState } from "react";
+import { updateAppSettingAction } from "@/app/settings/setting-actions";
+import { useEffect } from "react";
 import { showErrorMessage, showSuccessMessage } from "../Toast";
 
 const SpeedSetting = () => {

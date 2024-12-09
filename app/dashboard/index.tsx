@@ -75,7 +75,8 @@ export default function DashboardPage() {
   const handleResetAngle = () => {
     //8 of 10 slices, 360x8/10
     const rmpAngleTmp = 288 * rpm / gaugeConfig.rpm.max;
-    const powerAngleTmp = 288 * power / gaugeConfig.power.max;
+    const powerAngleTmp = 288 * ((power+1000) / (gaugeConfig.power.max+1000));
+    //console.log("-------powerAngleTmp------",powerAngleTmp);
     setRpmAngle(rmpAngleTmp);
     setPowerAngle(powerAngleTmp);
   };
@@ -98,7 +99,7 @@ export default function DashboardPage() {
     // Set up an interval to call the handleFetchSettingAction function every 5 seconds
     const intervalId = setInterval(() => {
       handleFetchSettingAction();
-    }, 1000);
+    }, 2000);
     // Clear the interval when the component unmounts
     return () => clearInterval(intervalId);
 
@@ -109,13 +110,16 @@ export default function DashboardPage() {
     handleResetAngle();
   }, [speedSetting]);
 
+  useEffect(() => {
+    handleResetAngle();
+  }, [power,rpm]);
 
   const handleFetchSettingAction = async () => {
     fetchSettingsAction(settingCode).then((res) => {
       if (res.error) {
         showErrorMessage(res.error); // Show error on the client
       } else if (res.data) {
-        console.log("---------res-----", res.data);
+        //console.log("---------res-----", res.data);
         const inputValueRpm = parseFloat(res.data.rpm);
         const inputValuePower = parseFloat(res.data.power);
         const inputValueTemp = parseFloat(res.data.temperature);
@@ -144,7 +148,6 @@ export default function DashboardPage() {
           setBatteryLow(true);
         }
 
-        //handleResetAngle();
       }
     })
   };
@@ -159,7 +162,7 @@ export default function DashboardPage() {
     };
 
     updateAppSettingAction(req).then((res) => {
-      console.log("---------updateAppSettingAction-----", res);
+      //console.log("---------updateAppSettingAction-----", res);
       if (res.error) {
         showErrorMessage(res.error); // Show error on the client
       } else if (res.data) {
@@ -239,7 +242,7 @@ export default function DashboardPage() {
           </div>
         </div>
         <div className="flex items-center me-4">
-          <PlugInIcon className={"w-14 h-14 " + (isCharging ? " text-red-600 " : "text-neutral-500")} onClick={(e) => handlePluginClick()} />
+          <PlugInIcon className={"w-14 h-14 " + (isCharging ? " text-red-600 " : "text-neutral-500")} onClick={() => handlePluginClick()} />
         </div>
       </div>
     </main>

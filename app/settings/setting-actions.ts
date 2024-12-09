@@ -7,11 +7,9 @@ import {
     AppSettingFormSchema,
     AppSettingFormState,
     CreateAppSettingReq,
-    SearchAppSettingReq,
     SettingResponse,
     UpdateAppSettingReq,
 } from '@/app/settings/definitions';
-import { DataResponse } from '@/app/components/definitions';
 
 //Define base URLs for the API
 const BASE_URL = '/v1/setting'; // Base URL for appSetting API
@@ -75,6 +73,7 @@ export const createAppSettingAction = async (req: CreateAppSettingReq): Promise<
  * @returns A Promise that resolves with an object containing either the data or an error message.
  */
 export const fetchSettingsAction = async (parentCode: string): Promise<{ data: SettingResponse | null, error: string | null }> => {
+    console.log("--------fetchSettingsAction by parentCode---------",parentCode);
     return await api.get<SettingResponse>(`${BASE_URL}s`).then((res: ApiResponse<SettingResponse>) => {
         //console.log("--------fetchAppSettingAction---------" + JSON.stringify(res));
         return { data: res.data, error: null };

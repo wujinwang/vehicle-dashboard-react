@@ -9,7 +9,7 @@ import { fetchSettingsAction, updateAppSettingAction } from "./setting-actions";
 
 export default function SettingPage() {
 
-  const [state, setState] = useState<AppSettingFormState>({ errors: {} });
+  const [state] = useState<AppSettingFormState>({ errors: {} });
 
   const [isParking, setParking] = useState(false);
   const [parkingText, setParkingText] = useState("Parking");
@@ -48,7 +48,7 @@ export default function SettingPage() {
       if (res.error) {
         showErrorMessage(res.error); // Show error on the client
       } else if (res.data) {
-        console.log("---------res-----", res.data);
+        //console.log("---------res-----", res.data);
         setRpm(res.data.rpm + "");
         setBattery(res.data.battery);
         setCharging(res.data.isCharging);
@@ -153,8 +153,8 @@ export default function SettingPage() {
                 <div className="flex my-4">
                   <PowerIcon className="w-12 h-12 text-green-500 me-4" />
                   <div className="">
-                    <h2 className="font-semibold text-zinc-950 sm:text-sm dark:text-white">Power Consumption of Input</h2>
-                    <p data-slot="text" className="text-sm text-zinc-500 sm:text-sm dark:text-zinc-400">Please enter a number between -1000 to 1000</p>
+                    <h2 className="font-semibold text-zinc-950 sm:text-sm dark:text-white">Power Consumption</h2>
+                    <p data-slot="text" className="text-sm text-zinc-500 sm:text-sm dark:text-zinc-400">Please enter a number between 0 to 1000</p>
                   </div>
                 </div>
                 <div className="my-4">
@@ -171,7 +171,6 @@ export default function SettingPage() {
 
 
             <div className="lg:w-1/2 mb-12 lg:me-12">
-
               <section className="grid sm:grid-cols-2 border-b">
                 <div className="flex my-4">
                   <ParkingIcon className={"w-12 h-12 me-4" + (isParking ? " text-blue-500" : " text-green-500")} />
@@ -180,7 +179,7 @@ export default function SettingPage() {
                     <p data-slot="text" className="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">Parking indicator.</p>
                   </div>
                 </div>
-                <div className="mt-8 text-lg">
+                <div className="mt-4 mb-4 text-lg ms-16 sm:ms-0">
                   {parkingText}
                 </div>
               </section>
@@ -192,7 +191,7 @@ export default function SettingPage() {
                     <p data-slot="text" className="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">Motor charging indicator</p>
                   </div>
                 </div>
-                <div className="mt-8 text-lg">
+                <div className="mt-4 mb-4 text-lg ms-16 sm:ms-0">
                   {isCharging ? "Charging" : "Not Charging"}
                 </div>
               </section>
@@ -204,7 +203,7 @@ export default function SettingPage() {
                     <p data-slot="text" className="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">Motor temperature indicator</p>
                   </div>
                 </div>
-                <div className="mt-8 text-lg">
+                <div className="mt-4 mb-4 text-lg ms-16 sm:ms-0">
                   {temperature} <span className="wob_t" aria-label="°Celsius" aria-disabled="true" role="button">°C</span>
                 </div>
               </section>
@@ -216,7 +215,7 @@ export default function SettingPage() {
                     <p data-slot="text" className="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">Gear ratio of motor</p>
                   </div>
                 </div>
-                <div className="mt-8 text-lg">
+                <div className="mt-4 mb-4 text-lg ms-16 sm:ms-0">
                   {gearRatio}
                 </div>
               </section>

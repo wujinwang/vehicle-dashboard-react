@@ -1,6 +1,5 @@
 // useAppCodeStore.ts
 import { create } from 'zustand';
-import { AppCode, SearchAppCodeReq } from '@/app/dashboard/definitions';
 
 interface SettingStore {
     rpm: number;
