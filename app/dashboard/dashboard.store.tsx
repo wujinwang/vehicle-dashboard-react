@@ -7,6 +7,7 @@ interface DashboardStore {
     isCharging: boolean,
 
     isMotorStatusIndicator:boolean,
+    isEngineIndicator:boolean,
 
     rpm: number;
     power: number;
@@ -19,6 +20,7 @@ interface DashboardStore {
     setCharging: (isCharging: boolean) => void,
 
     setMotorStatusIndicator: (isMotorStatusIndicator: boolean) => void,
+    setEngineIndicator: (isEngineIndicator: boolean) => void,
 
     setRpm: (rpm: number) => void;
     setPower: (power: number) => void;
@@ -34,6 +36,7 @@ export const useDashboardStore = create<DashboardStore>((set) => ({
     isCharging: false,
 
     isMotorStatusIndicator:false,
+    isEngineIndicator:false,
 
     rpm: 0,
     power:0,
@@ -46,6 +49,7 @@ export const useDashboardStore = create<DashboardStore>((set) => ({
     setCharging: (isCharging: boolean) => set({ isCharging }),
 
     setMotorStatusIndicator: (isMotorStatusIndicator: boolean) => set({ isMotorStatusIndicator }),
+    setEngineIndicator: (isEngineIndicator: boolean) => set({ isEngineIndicator }),
 
     setRpm: (rpm: number) => set({ rpm }),
     setPower: (power: number) => set({ power }),

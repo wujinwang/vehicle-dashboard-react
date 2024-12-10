@@ -10,6 +10,7 @@ const SpeedSetting = () => {
   //Get value from store
   const {
     rpm,
+    battery,
     speedSetting,
     isCharging,
     
@@ -43,6 +44,12 @@ const SpeedSetting = () => {
     if (isCharging) {
       // Display an error message when the battery is charging
       showSuccessMessage("Operation not allowed while the battery is charging.");
+      return;
+    }
+    
+    if (battery==0) {
+      // Display an error message when the battery is charging
+      showSuccessMessage("Battery too low, please connect the charger.");
       return;
     }
 

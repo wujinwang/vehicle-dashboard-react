@@ -25,6 +25,7 @@ export default function DashboardPage() {
     isBatteryLow,
     isCharging,
     isMotorStatusIndicator,
+    isEngineIndicator,
     rpm,
     power,
     battery,
@@ -36,6 +37,7 @@ export default function DashboardPage() {
     setBattery,
     setTemperature,
     setMotorStatusIndicator,
+    setEngineIndicator,
     setBatteryLow
   } = useDashboardStore();
 
@@ -77,7 +79,7 @@ export default function DashboardPage() {
     //8 of 10 slices, 360x8/10
     const rmpAngleTmp = 288 * rpm / gaugeConfig.rpm.max;
     const powerAngleTmp = 144 + 144 *(rpm / gaugeConfig.rpm.max);
-    console.log("-------powerAngleTmp------", powerAngleTmp);
+    //console.log("-------powerAngleTmp------", powerAngleTmp);
     setRpmAngle(rmpAngleTmp);
     setPowerAngle(powerAngleTmp);
 
@@ -115,7 +117,7 @@ export default function DashboardPage() {
     // Set up an interval to call the handleFetchSettingAction function every 5 seconds
     const intervalId = setInterval(() => {
       handleFetchSettingAction();
-    }, 2000);
+    }, 20000);
     // Clear the interval when the component unmounts
     return () => clearInterval(intervalId);
 
@@ -148,11 +150,19 @@ export default function DashboardPage() {
         setGearRatio(res.data.gearRatio);
         setCharging(res.data.isCharging);
 
+        //show indicator while engine running
+        setEngineIndicator(false);
+        if (inputValueRpm > 0) {
+          setEngineIndicator(true);
+        }
+
         //if RPM > 599 show indicator
         setMotorStatusIndicator(false);
+       
         if (inputValueRpm > 599) {
           setMotorStatusIndicator(true);
         }
+
 
         //if temperature > 60 show indicator
         if (inputValueTemp > 60) {
@@ -169,6 +179,7 @@ export default function DashboardPage() {
         if (inputValueBattery == 0) {
           setRpm(0);
           setMotorStatusIndicator(false);
+          //showSuccessMessage("Battery too low.");
         }
       }
     })
@@ -199,7 +210,7 @@ export default function DashboardPage() {
       {/* Top Row of Icons */}
       <div className="flex border-b-2 border-neutral-500 w-full mt-2 pb-2">
         <ParkingIcon className={"w-12 h-12 ms-4 " + (isParking ? " text-red-600 " : "text-neutral-500")} />
-        <EngineIcon className={"w-12 h-12 ms-4 text-neutral-500"} />
+        <EngineIcon className={"w-12 h-12 ms-4 " + (isEngineIndicator ? " text-red-600 " : "text-neutral-500")}  />
         <MotorStatusIcon className={"w-12 h-12 ms-4 " + (isMotorStatusIndicator ? " text-red-600 " : "text-neutral-500")} />
         <BatteryIcon className={"w-12 h-12 ms-4 " + (isBatteryLow ? " text-red-600 " : "text-neutral-500")} />
       </div>
