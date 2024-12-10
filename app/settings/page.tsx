@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AppSettingFormState, UpdateAppSettingReq } from "./definitions";
+import { AppSettingFormPowerState, AppSettingFormRpmState, UpdateAppSettingReq } from "./definitions";
 import { Input } from "../components/ui/input";
 import { BatteryIcon, GearIcon, MotorStatusIcon, ParkingIcon, PlugInIcon, PowerIcon, TemperatureIcon } from "../components/ui/icons";
-import { showErrorMessage, showSuccessMessage } from "../components/Toast";
-import { fetchSettingsAction, updateAppSettingAction } from "./setting-actions";
+import { showErrorMessage } from "../components/Toast";
+import { AppSettingPowerValidate, AppSettingRpmValidate, fetchSettingsAction, updateAppSettingAction } from "./setting-actions";
 
 export default function SettingPage() {
 
-  const [state] = useState<AppSettingFormState>({ errors: {} });
+  const [stateRpm, setStateRpm] = useState<AppSettingFormRpmState>({ errors: {} });
+  const [statePower, setStatePower] = useState<AppSettingFormPowerState>({ errors: {} });
 
   const [isParking, setParking] = useState(false);
   const [parkingText, setParkingText] = useState("Parking");
@@ -31,7 +32,7 @@ export default function SettingPage() {
     // Set up an interval to call the handleFetchSettingAction function every 5 seconds
     const intervalId = setInterval(() => {
       handleFetchSettingAction();
-    }, 1000);
+    }, 5000);
 
     // Clear the interval when the component unmounts
     return () => clearInterval(intervalId);
@@ -44,7 +45,7 @@ export default function SettingPage() {
   }, [rpm]);
 
   const handleFetchSettingAction = async () => {
-    fetchSettingsAction(settingCode).then((res) => {
+    fetchSettingsAction().then((res) => {
       if (res.error) {
         showErrorMessage(res.error); // Show error on the client
       } else if (res.data) {
@@ -74,6 +75,21 @@ export default function SettingPage() {
   };
 
   const handleRpmSpeedChange = async (val: string) => {
+
+    //data validate
+    const formData = new FormData();   
+		formData.append("rpm",val);   
+
+    // Use `createStepValidate` with formData and state
+    const newState = await AppSettingRpmValidate(formData, stateRpm);
+    setStateRpm(newState); // Update form state with newState
+
+    // After successful submission, call the handler on the client
+    if (Object.keys(newState?.errors ?? {}).length === 0) {
+      //console.log("---------handleAppSettingUpdateSubmit--------");
+      handleAppSettingUpdateSubmit("APP_SETTING_RPM", val);
+    }
+
     setRpm(val);
     const inputValue = parseFloat(val);
     setParking(false);
@@ -83,12 +99,27 @@ export default function SettingPage() {
         setParking(true);
       }
     }
-    handleAppSettingUpdateSubmit("APP_SETTING_RPM", val);
+
+
   };
 
   const handlePowerChange = async (val: string) => {
+
+    //data validate
+    const formData = new FormData();   
+		formData.append("power",val);   
+
+    const newState = await AppSettingPowerValidate(formData, statePower);
+    setStatePower(newState); // Update form state with newState
+
+    // After successful submission, call the handler on the client
+    if (Object.keys(newState?.errors ?? {}).length === 0) {
+      //console.log("---------handleAppSettingUpdateSubmit--------");
+      handleAppSettingUpdateSubmit("APP_SETTING_POWER", val);
+    }
+
     setPower(val);
-    handleAppSettingUpdateSubmit("APP_SETTING_POWER", val);
+    
   };
 
   // Handler to update readOnly state after submission
@@ -100,11 +131,11 @@ export default function SettingPage() {
     };
 
     updateAppSettingAction(req).then((res) => {
-      console.log("---------updateAppSettingAction-----", res);
+      //console.log("---------updateAppSettingAction-----", res);
       if (res.error) {
         showErrorMessage(res.error); // Show error on the client
       } else if (res.data) {
-        showSuccessMessage("updated successfully.");
+        //showSuccessMessage("updated successfully.");
       }
     });
 
@@ -143,8 +174,8 @@ export default function SettingPage() {
                   <Input type="number" min={0} max={800} value={rpm}
                     onChange={(e) => handleRpmSpeedChange(e.target.value)}
                   ></Input>
-                  {state?.errors?.configValue && (
-                    <p className="text-sm text-red-500">{state.errors.configValue}</p>
+                  {stateRpm?.errors?.rpm && (
+                    <p className="text-sm text-red-500">{stateRpm.errors.rpm}</p>
                   )}
                 </div>
               </section>
@@ -161,13 +192,12 @@ export default function SettingPage() {
                   <Input type="number" min={-1000} max={1000} value={power}
                     onChange={(e) => handlePowerChange(e.target.value)}
                   ></Input>
-                  {state?.errors?.configValue && (
-                    <p className="text-sm text-red-500">{state.errors.configValue}</p>
+                  {statePower?.errors?.power && (
+                    <p className="text-sm text-red-500">{statePower.errors.power}</p>
                   )}
                 </div>
               </section>
             </div>
-
 
 
             <div className="lg:w-1/2 mb-12 lg:me-12">

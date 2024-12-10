@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import ToastProvider from "@/app/provider/ToastProvider";
+
 import "./globals.css";
 
 
@@ -15,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-white">
+      <ToastProvider ></ToastProvider>
         {children}        
       </body>
     </html>

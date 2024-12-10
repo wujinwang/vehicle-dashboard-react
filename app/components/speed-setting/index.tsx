@@ -12,9 +12,10 @@ const SpeedSetting = () => {
     rpm,
     speedSetting,
     isCharging,
-
+    
     setParking,
     setRpm,
+    
     setSpeedSetting,
     setMotorStatusIndicator
   } = useDashboardStore();

@@ -10,6 +10,7 @@ interface DashboardStore {
 
     rpm: number;
     power: number;
+    battery:number;
     speedSetting: number;
     temperature: number;
 
@@ -21,6 +22,7 @@ interface DashboardStore {
 
     setRpm: (rpm: number) => void;
     setPower: (power: number) => void;
+    setBattery: (battery: number) => void;
     setSpeedSetting: (speedSetting: number) => void;
     setTemperature: (temperature: number) => void;
 }
@@ -35,6 +37,7 @@ export const useDashboardStore = create<DashboardStore>((set) => ({
 
     rpm: 0,
     power:0,
+    battery:0,
     speedSetting: 0,
     temperature: 0,
 
@@ -46,6 +49,7 @@ export const useDashboardStore = create<DashboardStore>((set) => ({
 
     setRpm: (rpm: number) => set({ rpm }),
     setPower: (power: number) => set({ power }),
+    setBattery: (battery: number) => set({ battery }),
     setSpeedSetting: (speedSetting: number) => set({ speedSetting }),
     setTemperature: (temperature: number) => set({ temperature }),
 

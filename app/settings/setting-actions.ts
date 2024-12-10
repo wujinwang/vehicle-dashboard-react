@@ -4,8 +4,10 @@
 import { api, ApiResponse, handleApiError } from '@/app/lib/fetch-client';
 import {
     AppSetting,
-    AppSettingFormSchema,
-    AppSettingFormState,
+    AppSettingFormPowerSchema,
+    AppSettingFormPowerState,
+    AppSettingFormRpmSchema,
+    AppSettingFormRpmState,
     CreateAppSettingReq,
     SettingResponse,
     UpdateAppSettingReq,
@@ -21,19 +23,14 @@ const BASE_URL = '/v1/setting'; // Base URL for appSetting API
  * @param state The current state of the form, including errors and other UI states.
  * @returns Updated form state with errors if validation fails or success if validation passes.
  */
-export const appSettingValidate = async (
+export const AppSettingRpmValidate = async (
     formData: FormData,
-    state: AppSettingFormState
-): Promise<AppSettingFormState> => {
+    state: AppSettingFormRpmState
+): Promise<AppSettingFormRpmState> => {
 
-   // 1. Validate form fields using Zod schema
-    const validatedFields = AppSettingFormSchema.safeParse({   
-		    code: formData.get("code"),   
-		    configValue: formData.get("configValue"),   
-		    parentCode: formData.get("parentCode"),   
-		    name: formData.get("name"),   
-		    memo: formData.get("memo"),   
-		    enabled: formData.get("enabled"),     	    		 
+    // 1. Validate form fields using Zod schema
+    const validatedFields = AppSettingFormRpmSchema.safeParse({
+        rpm: parseInt(formData.get("rpm") as string,0)
     });
 
     // If any form fields are invalid, return early with errors
@@ -50,13 +47,45 @@ export const appSettingValidate = async (
         errors: {}, // Clear errors after successful submission
     };
 };
-	
+
+/**
+ * Validate appSetting form data using Zod schema.
+ *
+ * @param formData The form data submitted by the user.
+ * @param state The current state of the form, including errors and other UI states.
+ * @returns Updated form state with errors if validation fails or success if validation passes.
+ */
+export const AppSettingPowerValidate = async (
+    formData: FormData,
+    state: AppSettingFormPowerState
+): Promise<AppSettingFormPowerState> => {
+
+    // 1. Validate form fields using Zod schema
+    const validatedFields = AppSettingFormPowerSchema.safeParse({
+        power: parseInt(formData.get("power") as string,0)
+    });
+
+    // If any form fields are invalid, return early with errors
+    if (!validatedFields.success) {
+        return {
+            ...state,
+            errors: validatedFields.error.flatten().fieldErrors, // Return validation errors
+        };
+    }
+
+    // 3. Optionally return success state after submission
+    return {
+        ...state,
+        errors: {}, // Clear errors after successful submission
+    };
+};
+
 /**
  * Create a new appSetting.
  *
  * @param req The request object containing appSetting data to create.
  * @returns A Promise that resolves with the created appSetting or an error message.
- */	
+ */
 export const createAppSettingAction = async (req: CreateAppSettingReq): Promise<{ data: AppSetting | null, error: string | null }> => {
     return await api.post<AppSetting>(`${BASE_URL}`, req).then((res: ApiResponse<AppSetting>) => {
         return { data: res.data, error: null };
@@ -67,13 +96,11 @@ export const createAppSettingAction = async (req: CreateAppSettingReq): Promise<
 };
 
 /**
- * Fetch all setting by a parentCode. 
- *
- * @param parentCode The ID of the appSetting for which to fetch appSetting.
+ * Fetch all setting 
  * @returns A Promise that resolves with an object containing either the data or an error message.
  */
-export const fetchSettingsAction = async (parentCode: string): Promise<{ data: SettingResponse | null, error: string | null }> => {
-    console.log("--------fetchSettingsAction by parentCode---------",parentCode);
+export const fetchSettingsAction = async (): Promise<{ data: SettingResponse | null, error: string | null }> => {
+    //console.log("--------fetchSettingsAction by parentCode---------",parentCode);
     return await api.get<SettingResponse>(`${BASE_URL}s`).then((res: ApiResponse<SettingResponse>) => {
         //console.log("--------fetchAppSettingAction---------" + JSON.stringify(res));
         return { data: res.data, error: null };

@@ -1,25 +1,33 @@
 import { z } from 'zod';
 
-export const AppSettingFormSchema = z.object({
-
-  code: z.string().min(1, { message: 'code required.' }).trim(),
-  configValue: z.string().min(1, { message: 'configValue required.' }).trim(),
-  parentCode: z.string().min(1, { message: 'parentCode required.' }).trim(),
-  name: z.string().min(1, { message: 'name required.' }).trim(),
-  memo: z.string().min(1, { message: 'memo required.' }).trim(),
-  enabled: z.string().min(1, { message: 'enabled required.' }).trim(),
+export const AppSettingFormRpmSchema = z.object({
+  rpm: z
+    .number()
+    .min(0, { message: 'Motor RPM must be 0 or more' })
+    .max(800, { message: 'Motor RPM must not exceed 800' }),
 });
 
-export type AppSettingFormState =
+export type AppSettingFormRpmState =
   | {
     errors?: {
+      rpm?: string[];
+    };
+    message?: string;
+  }
+  | undefined;
 
-      code?: string[];
-      configValue?: string[];
-      parentCode?: string[];
-      name?: string[];
-      memo?: string[];
-      enabled?: string[];
+
+export const AppSettingFormPowerSchema = z.object({
+  power: z
+    .number()
+    .min(0, { message: 'Power consumption must be 0 or more' })
+    .max(1000, { message: 'Power consumption must not exceed 1000' }), // Corrected the message to reflect the actual limit
+});
+
+export type AppSettingFormPowerState =
+  | {
+    errors?: {
+      power?: string[];
     };
     message?: string;
   }
@@ -62,5 +70,5 @@ export interface SettingResponse {
   power: string;
   temperature: string;
   gearRatio: string;
-  isCharging:boolean
+  isCharging: boolean
 }
