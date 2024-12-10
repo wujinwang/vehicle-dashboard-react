@@ -30,8 +30,8 @@ export default function Home() {
               Setting
             </Link>
           </div>
-          <div className="mt-1">Version:0.95</div>
-          <div className="mt-1">Release Date: Dec 09,2024  08:56:00 am</div>
+          <div className="mt-1">Version:1.0.0</div>
+          <div className="mt-1">Release Date: Dec 10,2024  10:20:00 am</div>
         </footer>
       </div>
     </div>

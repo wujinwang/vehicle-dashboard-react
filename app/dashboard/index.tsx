@@ -117,7 +117,7 @@ export default function DashboardPage() {
     // Set up an interval to call the handleFetchSettingAction function every 5 seconds
     const intervalId = setInterval(() => {
       handleFetchSettingAction();
-    }, 20000);
+    }, 3000);
     // Clear the interval when the component unmounts
     return () => clearInterval(intervalId);
 
@@ -137,7 +137,7 @@ export default function DashboardPage() {
       if (res.error) {
         showErrorMessage(res.error); // Show error on the client
       } else if (res.data) {
-        console.log("---------res-----", res.data);
+        //console.log("---------res-----", res.data);
         const inputValueRpm = parseFloat(res.data.rpm);
         const inputValuePower = parseFloat(res.data.power);
         const inputValueTemp = parseFloat(res.data.temperature);

@@ -13,11 +13,12 @@ const SpeedSetting = () => {
     battery,
     speedSetting,
     isCharging,
-    
+
     setParking,
     setRpm,
-    
+
     setSpeedSetting,
+    setEngineIndicator,
     setMotorStatusIndicator
   } = useDashboardStore();
 
@@ -46,8 +47,8 @@ const SpeedSetting = () => {
       showSuccessMessage("Operation not allowed while the battery is charging.");
       return;
     }
-    
-    if (battery==0) {
+
+    if (battery == 0) {
       // Display an error message when the battery is charging
       showSuccessMessage("Battery too low, please connect the charger.");
       return;
@@ -56,6 +57,11 @@ const SpeedSetting = () => {
     const inputValue = parseFloat(val);
     // Check if the parsed value is a valid number
     if (!isNaN(inputValue)) {
+
+      setEngineIndicator(false)
+      if (inputValue > 0) {
+        setEngineIndicator(true)
+      }
       const sp = inputValue * speedStep;
       setSpeedSetting(inputValue);
       setRpm(sp);
@@ -87,7 +93,7 @@ const SpeedSetting = () => {
       //console.log("---------updateAppSettingAction-----", res);
       if (res.error) {
         showErrorMessage(res.error); // Show error on the client
-      } 
+      }
 
     });
 

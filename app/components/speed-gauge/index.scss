@@ -51,6 +51,7 @@
 		background-color: rgb(245, 242, 242);
 		transform-origin: top;
 		transform: translate(-50%, 0) rotate(calc(var(--pointer-initial-angle) + 36deg));
+		transition: transform 2s ease-in-out; // Smooth animation on rotation
 	}
 
 }
