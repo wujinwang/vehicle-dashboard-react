@@ -38,8 +38,14 @@ const SpeedSetting = () => {
     }
   };
 
-
   const handleSpeedSettingChange = async (val: string) => {
+
+    if (isCharging) {
+      // Display an error message when the battery is charging
+      showSuccessMessage("Operation not allowed while the battery is charging.");
+      return;
+    }
+
     const inputValue = parseFloat(val);
     // Check if the parsed value is a valid number
     if (!isNaN(inputValue)) {
@@ -74,9 +80,8 @@ const SpeedSetting = () => {
       //console.log("---------updateAppSettingAction-----", res);
       if (res.error) {
         showErrorMessage(res.error); // Show error on the client
-      } else if (res.data) {
-        showSuccessMessage("updated successfully.");
-      }
+      } 
+
     });
 
   };
@@ -85,7 +90,7 @@ const SpeedSetting = () => {
   return (
     <div className="ms-12 mt-2">
       <div className="ms-10 text-xs text-white mb-1">MOTOR SPEED SETTING</div>
-      <input type="range" disabled={isCharging}  min={0} max="4" value={speedSetting} onChange={(e) => handleSpeedSettingChange(e.target.value)} className="range range-lgaccent-white w-64 h-3 bg-neutral-800 rounded-lg appearance-none cursor-pointer" step="1" />
+      <input type="range" min={0} max="4" value={speedSetting} onChange={(e) => handleSpeedSettingChange(e.target.value)} className="range range-lgaccent-white w-64 h-3 bg-neutral-800 rounded-lg appearance-none cursor-pointer" step="1" />
 
       <div className="flex w-full justify-between text-xs text-white">
         <span className="ms-0">OFF</span>

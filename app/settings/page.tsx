@@ -154,7 +154,7 @@ export default function SettingPage() {
                   <BatteryIcon className="w-12 h-12 text-green-500 me-4" />
                   <div className="">
                     <h2 className="font-semibold text-zinc-950 sm:text-sm dark:text-white">Battery</h2>
-                    <p data-slot="text" className="text-sm text-zinc-500 sm:text-sm dark:text-zinc-400">Warning indicator show if less 20%.</p>
+                    <p data-slot="text" className="text-sm text-zinc-500 sm:text-sm dark:text-zinc-400">Warning indicator is shown if less than 20%.</p>
                   </div>
                 </div>
                 <div className="my-4">
@@ -167,7 +167,7 @@ export default function SettingPage() {
                   <MotorStatusIcon className="w-12 h-12 text-green-500 me-4" />
                   <div className="">
                     <h2 className="font-semibold text-zinc-950 sm:text-sm dark:text-white">Motor RPM</h2>
-                    <p data-slot="text" className="text-sm text-zinc-500 sm:text-2xs dark:text-zinc-400">High speed indicator show if greater than 600 RPM.</p>
+                    <p data-slot="text" className="text-sm text-zinc-500 sm:text-2xs dark:text-zinc-400">High-speed indicator is shown if the RPM exceeds 600.</p>
                   </div>
                 </div>
                 <div className="my-4">

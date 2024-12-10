@@ -70,33 +70,30 @@ export default function DashboardPage() {
   const initData = useCallback(() => {
     setPowerDataList(getPowerDataList(gaugeConfig.power.max, gaugeConfig.power.step));
     setRpmDataList(getRpmDataList(gaugeConfig.rpm.max, gaugeConfig.rpm.step));
-    handleResetAngle();
+    resetAngle();
   }, []);
 
-  const handleResetAngle = () => {
+  const resetAngle = () => {
     //8 of 10 slices, 360x8/10
     const rmpAngleTmp = 288 * rpm / gaugeConfig.rpm.max;
-    const powerAngleTmp = 144 * ((1000-power) / (gaugeConfig.power.max));
-    //console.log("-------powerAngleTmp------",powerAngleTmp);
+    const powerAngleTmp = 144 + 144 *(rpm / gaugeConfig.rpm.max);
+    console.log("-------powerAngleTmp------", powerAngleTmp);
     setRpmAngle(rmpAngleTmp);
     setPowerAngle(powerAngleTmp);
 
     //console.log("-------isCharging------", isCharging);
     //show the charging progress while charging
     if (isCharging == true) {
-      const powerAngleTmp2 = 144 + 144 * battery / 100;
+      const powerAngleTmp2 = 144 * battery / 100;
+      //console.log("-------powerAngleTmp2------", powerAngleTmp2);
       setPowerAngle(powerAngleTmp2);
-    }
-
-    if (rpm == 0) {
-      setPowerAngle(144);
     }
 
   };
 
   const handlePluginClick = () => {
     const newIsCharging = !isCharging;
-    console.log("----handlePluginClick------", isCharging);
+    //console.log("----handlePluginClick------", isCharging);
     handleAppSettingUpdateSubmit("APP_SETTING_IS_CHARGING", newIsCharging ? "1" : "0");
     setCharging(newIsCharging);
     setPowerAngle(144);//default position
@@ -105,7 +102,7 @@ export default function DashboardPage() {
     if (newIsCharging == true) {
       setRpm(0);
       //calculate the new angle based on battery level
-      const powerAngleTmp2 = 144 + 144 * battery / 100;
+      const powerAngleTmp2 = 144 * battery / 100;
       setPowerAngle(powerAngleTmp2);
       handleAppSettingUpdateSubmit("APP_SETTING_RPM", "0");
     }
@@ -126,19 +123,19 @@ export default function DashboardPage() {
 
 
   useEffect(() => {
-    handleResetAngle();
+    resetAngle();
   }, [speedSetting]);
 
   useEffect(() => {
-    handleResetAngle();
-  }, [power, rpm]);
+    resetAngle();
+  }, [power, rpm, battery]);
 
   const handleFetchSettingAction = async () => {
     fetchSettingsAction().then((res) => {
       if (res.error) {
         showErrorMessage(res.error); // Show error on the client
       } else if (res.data) {
-        //console.log("---------res-----", res.data);
+        console.log("---------res-----", res.data);
         const inputValueRpm = parseFloat(res.data.rpm);
         const inputValuePower = parseFloat(res.data.power);
         const inputValueTemp = parseFloat(res.data.temperature);
@@ -149,6 +146,7 @@ export default function DashboardPage() {
         setBattery(inputValueBattery);
         setTemperature(inputValueTemp);
         setGearRatio(res.data.gearRatio);
+        setCharging(res.data.isCharging);
 
         //if RPM > 599 show indicator
         setMotorStatusIndicator(false);
@@ -168,6 +166,10 @@ export default function DashboardPage() {
           setBatteryLow(true);
         }
 
+        if (inputValueBattery == 0) {
+          setRpm(0);
+          setMotorStatusIndicator(false);
+        }
       }
     })
   };
@@ -247,17 +249,17 @@ export default function DashboardPage() {
       <div className="flex border-b-2 border-neutral-500 w-full h-20 justify-between">
         <div className="flex">
           <div className="border-r border-neutral-900 ">
-            <GearIcon className="w-12 h-12 ms-4 me-4 mt-4 text-neutral-500"  onClick={(e) => showSuccessMessage("to be implemented.")}/>
+            <GearIcon className="w-12 h-12 ms-4 me-4 mt-4 text-neutral-500" onClick={() => showSuccessMessage("to be implemented.")} />
           </div>
           <div className="border-r border-neutral-900 ">
-            <MotorStatusIcon className="w-12 h-12 ms-4 me-4 mt-4  text-neutral-500"  onClick={(e) => showSuccessMessage("to be implemented.")}/>
+            <MotorStatusIcon className="w-12 h-12 ms-4 me-4 mt-4  text-neutral-500" onClick={() => showSuccessMessage("to be implemented.")} />
           </div>
           <div className="border-r border-neutral-900 ">
-            <TemperatureIcon className="w-12 h-12 ms-4 me-4 mt-4 text-neutral-500"  onClick={(e) => showSuccessMessage("to be implemented.")}/>
+            <TemperatureIcon className="w-12 h-12 ms-4 me-4 mt-4 text-neutral-500" onClick={() => showSuccessMessage("to be implemented.")} />
           </div>
           <div className="flex bg-neutral-800 w-20 ms-24">
             <div className="w-full rounded border border-zinc-950 m01">
-              <OthersIcon className="w-12 h-12 text-neutral-300 m-3" onClick={(e) => showSuccessMessage("This will show others infomation.")}/>
+              <OthersIcon className="w-12 h-12 text-neutral-300 m-3" onClick={() => showSuccessMessage("This will show others infomation.")} />
             </div>
           </div>
         </div>
