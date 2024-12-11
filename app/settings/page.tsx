@@ -32,7 +32,7 @@ export default function SettingPage() {
     // Set up an interval to call the handleFetchSettingAction function every 5 seconds
     const intervalId = setInterval(() => {
       handleFetchSettingAction();
-    }, 5000);
+    }, 3000);
 
     // Clear the interval when the component unmounts
     return () => clearInterval(intervalId);
@@ -52,6 +52,7 @@ export default function SettingPage() {
         //console.log("---------res-----", res.data);
         setRpm(res.data.rpm + "");
         setBattery(res.data.battery);
+        setPower(res.data.power);
         setCharging(res.data.isCharging);
         setTemperature(res.data.temperature);
         setGearRatio(res.data.gearRatio);
@@ -77,8 +78,8 @@ export default function SettingPage() {
   const handleRpmSpeedChange = async (val: string) => {
 
     //data validate
-    const formData = new FormData();   
-		formData.append("rpm",val);   
+    const formData = new FormData();
+    formData.append("rpm", val);
 
     // Use `createStepValidate` with formData and state
     const newState = await AppSettingRpmValidate(formData, stateRpm);
@@ -105,9 +106,11 @@ export default function SettingPage() {
 
   const handlePowerChange = async (val: string) => {
 
+    setPower(val);
+
     //data validate
-    const formData = new FormData();   
-		formData.append("power",val);   
+    const formData = new FormData();
+    formData.append("power", val);
 
     const newState = await AppSettingPowerValidate(formData, statePower);
     setStatePower(newState); // Update form state with newState
@@ -115,11 +118,13 @@ export default function SettingPage() {
     // After successful submission, call the handler on the client
     if (Object.keys(newState?.errors ?? {}).length === 0) {
       //console.log("---------handleAppSettingUpdateSubmit--------");
+      const powerNewValue = parseFloat(val);
+      const rpmNewValue = (powerNewValue / 1000) * 800 + "";
+      setRpm(rpmNewValue);
+      handleAppSettingUpdateSubmit("APP_SETTING_RPM", rpmNewValue);
       handleAppSettingUpdateSubmit("APP_SETTING_POWER", val);
-    }
+    }   
 
-    setPower(val);
-    
   };
 
   // Handler to update readOnly state after submission
@@ -184,14 +189,17 @@ export default function SettingPage() {
                 <div className="flex my-4">
                   <PowerIcon className="w-12 h-12 text-green-500 me-4" />
                   <div className="">
-                    <h2 className="font-semibold text-zinc-950 sm:text-sm dark:text-white">Power Consumption</h2>
-                    <p data-slot="text" className="text-sm text-zinc-500 sm:text-sm dark:text-zinc-400">Please enter a number between 0 to 1000</p>
+                    <h2 className="font-semibold text-zinc-950 sm:text-sm dark:text-white">Power</h2>
+                    <p data-slot="text" className="text-sm text-zinc-500 sm:text-sm dark:text-zinc-400">{isCharging == true ? "Battery is charging" : "Please enter a number between 0 to 1000"}</p>
                   </div>
                 </div>
                 <div className="my-4">
-                  <Input type="number" min={-1000} max={1000} value={power}
+                  {isCharging == true && <div className="mt-2 text-lg">{power} KW</div>}
+                  {isCharging == false && <Input type="number" min={0} max={1000} value={power}
                     onChange={(e) => handlePowerChange(e.target.value)}
-                  ></Input>
+                  ></Input>}
+
+
                   {statePower?.errors?.power && (
                     <p className="text-sm text-red-500">{statePower.errors.power}</p>
                   )}

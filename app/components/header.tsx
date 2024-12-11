@@ -22,6 +22,10 @@ export default function Header() {
                         href="/settings" className="text-gray-300 hover:bg-gray-500 hover:text-white rounded-md px-3 py-1 text-md font-medium bg-gray-600">
                         Setting
                     </Link>
+                    <Link
+                        href="/" className="text-gray-300 hover:bg-gray-500 hover:text-white rounded-md px-3 py-1 text-md font-medium ">
+                        Demo
+                    </Link>
                 </div>
             </div>
             <div className="ml-auto flex items-center gap-4">

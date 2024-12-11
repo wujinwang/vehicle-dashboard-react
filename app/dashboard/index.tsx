@@ -83,6 +83,8 @@ export default function DashboardPage() {
     setRpmAngle(rmpAngleTmp);
     setPowerAngle(powerAngleTmp);
 
+    setPower((rpm / gaugeConfig.rpm.max)*gaugeConfig.power.max);
+
     //console.log("-------isCharging------", isCharging);
     //show the charging progress while charging
     if (isCharging == true) {

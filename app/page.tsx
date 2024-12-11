@@ -30,8 +30,16 @@ export default function Home() {
               Setting
             </Link>
           </div>
+          <div className="mt-1">API Doc:
+            <Link
+              href="http://35.203.101.153:8002/swagger-ui/index.html#/" className="text-red-600" target="_blank">
+              Rest API Documentation
+            </Link>
+          </div>
+          
+
           <div className="mt-1">Version:1.0.0</div>
-          <div className="mt-1">Release Date: Dec 10,2024  10:20:00 am</div>
+          <div className="mt-1">Release Date: Dec 10,2024  15:20:00</div>
         </footer>
       </div>
     </div>

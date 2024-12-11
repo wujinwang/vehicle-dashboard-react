@@ -77,7 +77,12 @@ const SpeedSetting = () => {
         setMotorStatusIndicator(true);
       }
 
+      
       handleAppSettingUpdateSubmit("APP_SETTING_RPM", sp + "");
+
+      //reset power
+      const powerNewValue=(sp/800)*1000+"";//convert to power
+      handleAppSettingUpdateSubmit("APP_SETTING_POWER", powerNewValue);
     }
   };
 
